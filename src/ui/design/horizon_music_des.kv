@@ -1,0 +1,232 @@
+#:kivy 1.11.1
+
+#: import FadeTransition kivy.uix.screenmanager.FadeTransition
+#: import NoTransition kivy.uix.screenmanager.NoTransition
+#: import Video kivy.uix.video.Video
+#: import Image kivy.uix.image.Image
+
+WindowManager:
+    transition: NoTransition()
+    Intro:
+    MenuScreen:
+    InfoScreen:
+    MyLibsScreen:
+    MySongsScreen:
+    AllSongsScreen:
+
+
+<Intro>:
+    name: "intro"
+
+    Video:
+        id: intro
+        source:'videos\Intro.avi'
+        size: self.texture_size
+        state: 'play'
+
+    ImageButton:
+        id: contBTN
+        source:'images\widgets\Cont.png'
+
+        pos: 1790, 15
+        size: 118, 118
+        
+
+        on_release: 
+            app.root.current = "Menu"
+            intro.state = 'stop'
+
+    
+<MenuScreen>:
+    name: "Menu"
+
+    BackgroundImage:
+
+    ImageButton:
+        id: infoBTN
+        source:'images\widgets\Info.png'
+
+        pos: 1310, 165
+        size: 360, 360
+        
+        on_release: 
+            app.root.current = "Info"
+
+    ImageButton:
+        id: musicBTN
+        source:'images\widgets\Music.png'
+
+        pos: 750, 105
+        size: 410, 410
+        
+        on_release: 
+            app.root.current = "AllSongs"
+
+    ImageButton:
+        id: playlistBTN
+        source:'images\widgets\Playlist.png'
+
+        pos: 250, 165
+        size: 350, 350
+        
+        on_release: 
+            app.root.current = "Libs"
+
+    ImageButton:
+        id: quitBTN
+        source:'images\widgets\Quit.png'
+
+        pos: 1790, 15
+        size: 118, 118
+
+        on_release:
+            app.get_running_app().stop()
+
+    Image:
+        id:SearchBar
+        source:'images\widgets\SearchBar.png'
+
+        pos: 580, 500
+        size: 600, 600
+        size_hint: None, None
+        stretch: True
+        keep_ratio: True
+
+        TransTextInput:
+            font_size: 45
+
+            pos: 608, 755
+            size: 520, 80
+
+            canvas.before:
+                Color:
+                    rgba: 0.157, 0.455, 1, 1
+
+    ImageButton:
+        id:SearchIcon
+        source:'images\widgets\SearchIcon.png'
+
+        pos: 1200, 750
+
+
+<InfoScreen>:
+    name: "Info"
+
+    Image:
+        source: 'images\screens\info.png'
+        size: self.texture_size
+
+    BackToManuBTN:
+
+
+<MyLibsScreen>:
+    name: "Libs"
+
+    BackgroundImage:
+
+    BackToManuBTN:
+
+    Folder:
+        id: folderBTN1
+        playlist_name: "Name"
+
+        pos: 130, 550
+        size: 500, 300
+
+        on_release:
+            app.root.current = "MySongs"
+
+
+<MySongsScreen>:
+    name:"MySongs"
+
+    BackgroundImage:
+
+    ImageButton:
+        id: backWinBTN
+        source:'images\widgets\Backw.png'
+
+        pos: 1790, 15
+        size: 118, 118
+
+        on_release: 
+            app.root.current = "Libs"
+
+
+<AllSongsScreen>:
+    name: "AllSongs"
+
+    BackgroundImage:
+
+    BackToManuBTN:
+
+
+# ====== my des ======
+<SmoothButton@Button>:
+
+    background_color: (0.0, 0.0, 0.0, 0.0)
+    background_normal: ''
+
+    back_color: (0.157, 0.455, 0.753, 0.971)
+    border_radius: [13]
+
+    opacity: 1 if self.state == 'normal' else 0.5
+
+    canvas.before:
+
+        Color:
+            rgba: self.back_color
+
+        RoundedRectangle:
+            size: self.size
+            pos: self.pos
+            radius: self.border_radius
+
+
+<imageButton>:
+    opacity: 1 if self.state == 'normal' else 0.3
+
+    size_hint: None, None
+    stretch: True
+    keep_ratio: True
+        
+
+
+<BackgroundImage@Image>:
+    source: 'images\screens\BackG.png'
+    size: self.texture_size
+
+
+<BackToManuBTN@ImageButton>:
+    source: 'images\widgets\BtoM.png'
+    pos: 1790, 15
+    size: 118, 118
+
+    on_release: 
+        app.root.current = "Menu"
+
+
+<Folder@ImageButton>:
+    id: baseFolder
+    source: 'images\widgets\PlayFolder.png'
+    playlist_name: 'Blah'
+
+    TransTextInput:
+        text: baseFolder.playlist_name
+
+        pos: baseFolder.x + 200, baseFolder.y - 35
+        font_size: 30
+
+        disabled: True
+    
+
+<TransTextInput@TextInput>:
+    multiline: False
+    foreground_color: (1,0,1,1)
+    background_color: (0,0,0,0)
+    cursor_color: (0.157, 0.455, 0.9, 0.971)
+    cursor_width: 3
+
+    canvas.before:
+        Color:
+            rgba: 0.157, 0.455, 1, 1
