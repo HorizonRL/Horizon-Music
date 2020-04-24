@@ -6,6 +6,7 @@ from kivy.uix.image import Image
 from kivy.uix.button import ButtonBehavior
 from kivy.uix.button import Button
 from kivy.core.window import Window
+from kivy.core.audio import SoundLoader, Sound
 
 
 '''
@@ -47,7 +48,18 @@ class AllSongsScreen(Screen):
 
 
 class ImageButton(ButtonBehavior, Image):
-    pass
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        self.bind(on_press=self.clickSound)
+
+    def clickSound(self, *args):
+        clickAudio = SoundLoader.load('sounds\click.mp3')
+        if clickAudio.state == 'play':
+            print("blah")
+            clickAudio.stop()
+        clickAudio.play()
+        clickAudio.seek(0.3538)
+        clickAudio.volume = 0.5
 
 
 kv_des = Builder.load_file('design\horizon_music_des.kv')
