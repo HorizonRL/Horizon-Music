@@ -10,10 +10,8 @@ from kivy.core.audio import SoundLoader, Sound
 
 
 '''
-    Screen
+    Screens
 '''
-
-
 class WindowManager(ScreenManager):
     pass
 
@@ -45,8 +43,6 @@ class AllSongsScreen(Screen):
 '''
     Widgets & Utils
 '''
-
-
 class ImageButton(ButtonBehavior, Image):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
@@ -55,19 +51,20 @@ class ImageButton(ButtonBehavior, Image):
     def clickSound(self, *args):
         clickAudio = SoundLoader.load('sounds\click.mp3')
         if clickAudio.state == 'play':
-            print("blah")
             clickAudio.stop()
         clickAudio.play()
-        clickAudio.seek(0.3538)
-        clickAudio.volume = 0.5
+        clickAudio.seek(0.3)
 
-
+'''
+    GUI Design
+'''
 kv_des = Builder.load_file('design\horizon_music_des.kv')
 
 
 class HorizonMusicApp(App):
     def build(self):
         self.title = "Horizon Music" + chr(169)
+        self.icon = 'icons\VisLogo.ico'
 
         Window.size = (1920, 1080)
         Window.fullscreen = True
