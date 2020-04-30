@@ -4,6 +4,8 @@
 #: import NoTransition kivy.uix.screenmanager.NoTransition
 #: import Video kivy.uix.video.Video
 #: import Image kivy.uix.image.Image
+#: import ScrollView kivy.uix.scrollview.ScrollView
+
 
 WindowManager:
     transition: NoTransition()
@@ -20,7 +22,7 @@ WindowManager:
 
     Video:
         id: intro
-        source:'videos\Intro.avi'
+        source: 'videos\Intro.avi'
         size: self.texture_size
         state: 'play'
 
@@ -141,8 +143,6 @@ WindowManager:
 
     BackgroundImage:
 
-    BackToManuBTN:
-
     Folder:
         id: folderBTN1
         playlist_name: "Name"
@@ -153,11 +153,14 @@ WindowManager:
         on_release:
             app.root.current = "MySongs"
 
+    BackToManuBTN:
 
 <MySongsScreen>:
     name:"MySongs"
 
     BackgroundImage:
+
+    ScrollView:
 
     ImageButton:
         id: backWinBTN
@@ -177,6 +180,8 @@ WindowManager:
     name: "AllSongs"
 
     BackgroundImage:
+
+    ScrollView:
 
     BackToManuBTN:
 

@@ -46,8 +46,8 @@ class AllSongsScreen(Screen):
 
 '''
     Widgets & Utils
-'''
 
+'''
 
 class ImageButton(ButtonBehavior, Image):
     def __init__(self, **kwargs):
@@ -114,7 +114,7 @@ class HorizonMusicApp(App):
         self.title = "Horizon Music" + chr(169)
 
         Window.size = (1920, 1080)
-        Window.fullscreen = False
+        Window.fullscreen = True
 
         return kv_des
 
