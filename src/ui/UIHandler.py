@@ -1,4 +1,3 @@
-import kivy
 from kivy.app import App
 from kivy.lang import Builder
 from kivy.uix.screenmanager import ScreenManager, Screen
@@ -53,18 +52,16 @@ class ImageButton(ButtonBehavior, Image):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
 
-        self.py_size = (0,0)
-        self.py_pos = (0,0)
-
         self.r = 0
 
         self.is_mouse_over = StableBoolean(false_threshold=3)
         Window.bind(mouse_pos=self.mouse_over_ani)
+        self.bind(on_press=self.on_press)
 
     def mouse_over_ani(self, src, mouse_pos):
-        self.r = self.py_size[0] / 2
+        self.r = self.size[0] / 2
 
-        x, y = self.py_pos
+        x, y = self.pos
         x = x + self.r
         y = y + self.r
 
@@ -76,13 +73,17 @@ class ImageButton(ButtonBehavior, Image):
         self.is_mouse_over.update(x_ready and y_ready)
 
         if self.state == 'down':
-            self.opacity = 0.1114
+            pass
 
         elif self.is_mouse_over.out_val and self.state == 'normal':
-            self.opacity = 0.5554
+            self.opacity = 0.5
 
         else:
-            self.opacity = 1
+            self.opacity = 0.75
+
+    def on_press(self, *args):
+        self.opacity = 1
+
 
 
 class TransTextInput(TextInput):
@@ -107,7 +108,7 @@ class HorizonMusicApp(App):
             self.click_audio.stop()
 
         self.click_audio.play()
-        self.click_audio.volume = 0.3
+        self.click_audio.volume = 0.2
         self.click_audio.seek(0.3133)
 
     def build(self):

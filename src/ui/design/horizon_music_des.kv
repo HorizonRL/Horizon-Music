@@ -32,9 +32,6 @@ WindowManager:
 
         pos: 1790, 15
         size: 118, 118
-        
-        py_size: self.size
-        py_pos: self.pos
 
         on_release: 
             app.root.current = "Menu"
@@ -52,9 +49,6 @@ WindowManager:
 
         pos: 1310, 165
         size: 360, 360
-
-        py_size: self.size
-        py_pos: self.pos
         
         on_release: 
             app.root.current = "Info"
@@ -65,9 +59,6 @@ WindowManager:
 
         pos: 750, 105
         size: 410, 410
-
-        py_size: self.size
-        py_pos: self.pos
         
         on_release: 
             app.root.current = "AllSongs"
@@ -78,9 +69,6 @@ WindowManager:
 
         pos: 250, 165
         size: 350, 350
-
-        py_size: self.size
-        py_pos: self.pos
         
         on_release: 
             app.root.current = "Libs"
@@ -91,9 +79,6 @@ WindowManager:
 
         pos: 1790, 15
         size: 118, 118
-
-        py_size: self.size
-        py_pos: self.pos
 
         on_release:
             app.get_running_app().stop()
@@ -123,9 +108,6 @@ WindowManager:
         source:'images\widgets\SearchIcon.png'
 
         pos: 1200, 750
-
-        py_size: self.size
-        py_pos: self.pos
 
 
 <InfoScreen>:
@@ -168,9 +150,6 @@ WindowManager:
 
         pos: 1790, 15
         size: 118, 118
-
-        py_size: self.size
-        py_pos: self.pos
 
         on_release: 
             app.root.current = "Libs"
@@ -227,9 +206,6 @@ WindowManager:
     pos: 1790, 15
     size: 118, 118
 
-    py_size: self.size
-    py_pos: self.pos
-
     on_release: 
         app.root.current = "Menu"
 
@@ -238,9 +214,6 @@ WindowManager:
     id: baseFolder
     source: 'images\widgets\PlayFolder.png'
     playlist_name: 'Blah'
-
-    py_size: self.size
-    py_pos: self.pos
 
     TransTextInput:
         text: baseFolder.playlist_name
