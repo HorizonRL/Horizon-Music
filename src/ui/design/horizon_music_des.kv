@@ -31,6 +31,8 @@ WindowManager:
         pos: 1790, 15
         size: 118, 118
         
+        py_size: self.size
+        py_pos: self.pos
 
         on_release: 
             app.root.current = "Menu"
@@ -48,6 +50,9 @@ WindowManager:
 
         pos: 1310, 165
         size: 360, 360
+
+        py_size: self.size
+        py_pos: self.pos
         
         on_release: 
             app.root.current = "Info"
@@ -58,6 +63,9 @@ WindowManager:
 
         pos: 750, 105
         size: 410, 410
+
+        py_size: self.size
+        py_pos: self.pos
         
         on_release: 
             app.root.current = "AllSongs"
@@ -68,6 +76,9 @@ WindowManager:
 
         pos: 250, 165
         size: 350, 350
+
+        py_size: self.size
+        py_pos: self.pos
         
         on_release: 
             app.root.current = "Libs"
@@ -78,6 +89,9 @@ WindowManager:
 
         pos: 1790, 15
         size: 118, 118
+
+        py_size: self.size
+        py_pos: self.pos
 
         on_release:
             app.get_running_app().stop()
@@ -107,6 +121,9 @@ WindowManager:
         source:'images\widgets\SearchIcon.png'
 
         pos: 1200, 750
+
+        py_size: self.size
+        py_pos: self.pos
 
 
 <InfoScreen>:
@@ -149,6 +166,9 @@ WindowManager:
         pos: 1790, 15
         size: 118, 118
 
+        py_size: self.size
+        py_pos: self.pos
+
         on_release: 
             app.root.current = "Libs"
 
@@ -184,12 +204,12 @@ WindowManager:
 
 
 <imageButton>:
-    opacity: 1 if self.state == 'normal' else 0.3
-
     size_hint: None, None
     stretch: True
     keep_ratio: True
-        
+
+    on_release: 
+        self.mouse_over_ani(self.pos, self.size)
 
 
 <BackgroundImage@Image>:
@@ -202,6 +222,9 @@ WindowManager:
     pos: 1790, 15
     size: 118, 118
 
+    py_size: self.size
+    py_pos: self.pos
+
     on_release: 
         app.root.current = "Menu"
 
@@ -210,6 +233,9 @@ WindowManager:
     id: baseFolder
     source: 'images\widgets\PlayFolder.png'
     playlist_name: 'Blah'
+
+    py_size: self.size
+    py_pos: self.pos
 
     TransTextInput:
         text: baseFolder.playlist_name
@@ -220,7 +246,7 @@ WindowManager:
         disabled: True
     
 
-<TransTextInput@TextInput>:
+<TransTextInput>:
     multiline: False
     foreground_color: (1,0,1,1)
     background_color: (0,0,0,0)
