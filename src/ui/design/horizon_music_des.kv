@@ -208,8 +208,8 @@ WindowManager:
     stretch: True
     keep_ratio: True
 
-    on_release: 
-        self.mouse_over_ani(self.pos, self.size)
+    on_press:
+        app.click_sound()
 
 
 <BackgroundImage@Image>:
@@ -256,3 +256,6 @@ WindowManager:
     canvas.before:
         Color:
             rgba: 0.157, 0.455, 1, 1
+
+    on_text_validate:
+        app.click_sound()

@@ -59,19 +59,7 @@ class ImageButton(ButtonBehavior, Image):
         self.r = 0
 
         self.is_mouse_over = StableBoolean(false_threshold=3)
-
-        self.click_audio = SoundLoader.load('sounds\click.mp3')
-
-        self.bind(on_press=self.click_sound)
         Window.bind(mouse_pos=self.mouse_over_ani)
-
-    def click_sound(self, *args):
-        if self.click_audio.state == 'play':
-            self.click_audio.stop()
-
-        self.click_audio.play()
-        self.click_audio.volume = 0.3
-        self.click_audio.seek(0.3123)
 
     def mouse_over_ani(self, src, mouse_pos):
         self.r = self.py_size[0] / 2
@@ -98,6 +86,8 @@ class ImageButton(ButtonBehavior, Image):
 
 
 class TransTextInput(TextInput):
+    def __init__(self, **kwargs):
+        super(TransTextInput, self).__init__(**kwargs)
     pass
 
 
@@ -108,6 +98,17 @@ kv_des = Builder.load_file('design\horizon_music_des.kv')
 
 
 class HorizonMusicApp(App):
+    def __init__(self, **kwargs):
+        super(HorizonMusicApp, self).__init__(**kwargs)
+        self.click_audio = SoundLoader.load('sounds\click.mp3')
+
+    def click_sound(self, *args):
+        if self.click_audio.state == 'play':
+            self.click_audio.stop()
+
+        self.click_audio.play()
+        self.click_audio.volume = 0.3
+        self.click_audio.seek(0.3133)
 
     def build(self):
         self.title = "Horizon Music" + chr(169)
