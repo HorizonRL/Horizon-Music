@@ -1,3 +1,6 @@
+import os
+os.environ["KIVY_NO_CONSOLELOG"] = "1"
+
 from kivy.app import App
 from kivy.lang import Builder
 from kivy.uix.screenmanager import ScreenManager, Screen
@@ -8,6 +11,7 @@ from kivy.core.audio import SoundLoader
 from kivy.uix.textinput import TextInput
 
 from src.utils.StableBoolean import StableBoolean
+from src.utils.Constants import GUIFiles
 
 
 '''
@@ -92,16 +96,14 @@ class TransTextInput(TextInput):
     pass
 
 
-'''
-    GUI Design
-'''
-kv_des = Builder.load_file('design\horizon_music_des.kv')
 
 
 class HorizonMusicApp(App):
     def __init__(self, **kwargs):
         super(HorizonMusicApp, self).__init__(**kwargs)
-        self.click_audio = SoundLoader.load('sounds\click.mp3')
+        self.gui_files = GUIFiles()  # load the gui files
+        self.kv_des = Builder.load_file(self.gui_files.KV_DES_FILE)
+        self.click_audio = SoundLoader.load(self.gui_files.CLICK_SOUND)
 
     def click_sound(self, *args):
         if self.click_audio.state == 'play':
@@ -117,8 +119,6 @@ class HorizonMusicApp(App):
         Window.size = (1920, 1080)
         Window.fullscreen = True
 
-        return kv_des
+        return self.kv_des
 
 
-if __name__ == "__main__":
-    HorizonMusicApp().run()

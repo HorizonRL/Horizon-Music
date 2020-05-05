@@ -6,7 +6,6 @@
 #: import Image kivy.uix.image.Image
 #: import ScrollView kivy.uix.scrollview.ScrollView
 
-
 WindowManager:
     transition: NoTransition()
     Intro:
@@ -22,13 +21,13 @@ WindowManager:
 
     Video:
         id: intro
-        source: 'videos\Intro.avi'
+        source: app.gui_files.INTRO
         size: self.texture_size
         state: 'play'
 
     ImageButton:
         id: contBTN
-        source:'images\widgets\Cont.png'
+        source: app.gui_files.CONTINUE_WINDOW_WIDGET
 
         pos: 1790, 15
         size: 118, 118
@@ -45,7 +44,7 @@ WindowManager:
 
     ImageButton:
         id: infoBTN
-        source:'images\widgets\Info.png'
+        source: app.gui_files.INFO_WIDGET
 
         pos: 1310, 165
         size: 360, 360
@@ -55,7 +54,7 @@ WindowManager:
 
     ImageButton:
         id: musicBTN
-        source:'images\widgets\Music.png'
+        source: app.gui_files.ALL_MUSIC_WIDGET
 
         pos: 750, 105
         size: 410, 410
@@ -65,7 +64,7 @@ WindowManager:
 
     ImageButton:
         id: playlistBTN
-        source:'images\widgets\Playlist.png'
+        source: app.gui_files.PLAYLIST_WIDGET
 
         pos: 250, 165
         size: 350, 350
@@ -75,7 +74,7 @@ WindowManager:
 
     ImageButton:
         id: quitBTN
-        source:'images\widgets\Quit.png'
+        source: app.gui_files.QUIT_WIDGET
 
         pos: 1790, 15
         size: 118, 118
@@ -85,7 +84,7 @@ WindowManager:
 
     Image:
         id:SearchBar
-        source:'images\widgets\SearchBar.png'
+        source: app.gui_files.SEARCH_BAR_WIDGET
 
         pos: 580, 500
         size: 600, 600
@@ -105,7 +104,7 @@ WindowManager:
 
     ImageButton:
         id:SearchIcon
-        source:'images\widgets\SearchIcon.png'
+        source: app.gui_files.SEARCH_WIDGET
 
         pos: 1200, 750
 
@@ -114,7 +113,7 @@ WindowManager:
     name: "Info"
 
     Image:
-        source: 'images\screens\info.png'
+        source: app.gui_files.INFO_SCREEN
         size: self.texture_size
 
     BackToManuBTN:
@@ -146,7 +145,7 @@ WindowManager:
 
     ImageButton:
         id: backWinBTN
-        source:'images\widgets\Backw.png'
+        source: app.gui_files.BACKWARD_WINDOW_WIDGET
 
         pos: 1790, 15
         size: 118, 118
@@ -197,12 +196,12 @@ WindowManager:
 
 
 <BackgroundImage@Image>:
-    source: 'images\screens\BackG.png'
+    source: app.gui_files.BACKGROUND
     size: self.texture_size
 
 
 <BackToManuBTN@ImageButton>:
-    source: 'images\widgets\BtoM.png'
+    source: app.gui_files.BACK_TO_MENU_WIDGET
     pos: 1790, 15
     size: 118, 118
 
@@ -212,7 +211,7 @@ WindowManager:
 
 <Folder@ImageButton>:
     id: baseFolder
-    source: 'images\widgets\PlayFolder.png'
+    source: app.gui_files.FOLDER_WIDGET
     playlist_name: 'Blah'
 
     TransTextInput:
