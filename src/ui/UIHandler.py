@@ -13,7 +13,6 @@ from kivy.uix.textinput import TextInput
 from src.utils.StableBoolean import StableBoolean
 from src.utils.Constants import GUIFiles
 
-
 '''
     Screens
 '''
@@ -52,6 +51,7 @@ class AllSongsScreen(Screen):
 
 '''
 
+
 class ImageButton(ButtonBehavior, Image):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
@@ -89,13 +89,10 @@ class ImageButton(ButtonBehavior, Image):
         self.opacity = 1
 
 
-
 class TransTextInput(TextInput):
     def __init__(self, **kwargs):
         super(TransTextInput, self).__init__(**kwargs)
     pass
-
-
 
 
 class HorizonMusicApp(App):
@@ -120,5 +117,3 @@ class HorizonMusicApp(App):
         Window.fullscreen = True
 
         return self.kv_des
-
-
