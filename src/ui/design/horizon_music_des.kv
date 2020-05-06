@@ -8,6 +8,7 @@
 
 WindowManager:
     transition: NoTransition()
+
     Intro:
     MenuScreen:
     InfoScreen:
@@ -116,7 +117,7 @@ WindowManager:
         source: app.gui_files.INFO_SCREEN
         size: self.texture_size
 
-    BackToManuBTN:
+    BackToMenuBTN:
 
 
 <MyLibsScreen>:
@@ -134,7 +135,7 @@ WindowManager:
         on_release:
             app.root.current = "MySongs"
 
-    BackToManuBTN:
+    BackToMenuBTN:
 
 <MySongsScreen>:
     name:"MySongs"
@@ -161,7 +162,7 @@ WindowManager:
 
     ScrollView:
 
-    BackToManuBTN:
+    BackToMenuBTN:
 
 
 # ====== my des ======
@@ -200,7 +201,7 @@ WindowManager:
     size: self.texture_size
 
 
-<BackToManuBTN@ImageButton>:
+<BackToMenuBTN@ImageButton>:
     source: app.gui_files.BACK_TO_MENU_WIDGET
     pos: 1790, 15
     size: 118, 118

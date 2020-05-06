@@ -52,4 +52,3 @@ class Playlist:
 class State(enum.Enum):
     PLAY = 1
     PAUSE = 0
-

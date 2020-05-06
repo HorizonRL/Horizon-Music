@@ -89,7 +89,6 @@ class ImageButton(ButtonBehavior, Image):
 class TransTextInput(TextInput):
     def __init__(self, **kwargs):
         super(TransTextInput, self).__init__(**kwargs)
-    pass
 
 
 class HorizonMusicApp(App):

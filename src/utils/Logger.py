@@ -15,7 +15,7 @@ class Logger:
         self.logger.addHandler(self.log)
 
     def log_error(self, msg):
-        self.logger.critical(msg)
+        self.logger.error(msg)
         if self.is_console:
             print('\033[91m' + msg + '\033[0m')
 
