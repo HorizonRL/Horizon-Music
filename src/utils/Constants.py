@@ -1,10 +1,9 @@
 from pathlib import Path
 from src.utils.Logger import Logger
 
-
 class GUIFiles:
-    def __init__(self):
-        self.logger = Logger()
+    def __init__(self, logger):
+        self.logger = logger
 
         self.GUI_PATH = str(Path.cwd() / 'ui')
 
@@ -14,7 +13,7 @@ class GUIFiles:
         self.INFO_SCREEN = self.GUI_PATH + r'\images\screens\info.png'
         self.BACKWARD_WINDOW_WIDGET = self.GUI_PATH + r'\images\widgets\Backw.png'
         self.CONTINUE_WINDOW_WIDGET = self.GUI_PATH + r'\images\widgets\cont.png'
-        self.BACK_TO_MENU_WIDGET = self.GUI_PATH + r'\images\wilgets\BtoM.png'
+        self.BACK_TO_MENU_WIDGET = self.GUI_PATH + r'\images\widgets\BtoM.png'
         self.INFO_WIDGET = self.GUI_PATH + r'\images\widgets\Info.png'
         self.ALL_MUSIC_WIDGET = self.GUI_PATH + r'\images\widgets\Music.png'
         self.FOLDER_WIDGET = self.GUI_PATH + r'\images\widgets\Folder.png'
@@ -42,4 +41,4 @@ class GUIFiles:
             f.close()
 
         if self.is_load:
-            self.logger.log_msg("Loaded all GUI files successfully!")
+            self.logger.log_to_console("Loaded all GUI files successfully!")

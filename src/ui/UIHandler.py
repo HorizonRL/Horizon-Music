@@ -96,9 +96,9 @@ class TransTextInput(TextInput):
 
 
 class HorizonMusicApp(App):
-    def __init__(self, **kwargs):
+    def __init__(self, logger, **kwargs):
         super(HorizonMusicApp, self).__init__(**kwargs)
-        self.gui_files = GUIFiles()  # load the gui files
+        self.gui_files = GUIFiles(logger)  # load the gui files
         self.kv_des = Builder.load_file(self.gui_files.KV_DES_FILE)
         self.click_audio = SoundLoader.load(self.gui_files.CLICK_SOUND)
 
