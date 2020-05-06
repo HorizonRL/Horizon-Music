@@ -4,10 +4,17 @@ from kivy.core.audio import SoundLoader
 
 
 class Song:
-    def __init__(self, song_name, artist, file_name):
-        self.song_name = song_name
-        self.artist = artist
-        self.file_name = file_name
+    def __init__(self, file):
+        self.file_name = file
+
+        sep_index = file.find('-')
+        lib_folder = "music_lib"
+
+        self.song_name = file[sep_index + 1 if file[sep_index + 1] is not ' ' else sep_index + 2:
+                              file.find('.mp3')].title()
+
+        self.artist = file[file.find(lib_folder) + len(lib_folder) + 1:
+                           sep_index if file[sep_index - 1] is not ' ' else sep_index - 1].title()
 
         self.audio_file = SoundLoader.load(self.file_name)
 

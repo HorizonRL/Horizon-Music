@@ -7,11 +7,7 @@ def create_all_music_playlist():
     PATH_TO_MUSIC_LIB = os.path.join(os.getcwd(), r'music_lib')
     for file in os.listdir(PATH_TO_MUSIC_LIB):
         if file.endswith(".mp3"):
-            sep_index = file.find('-')
-            artist = file[:sep_index if file[sep_index - 1] is not ' ' else sep_index - 1].title()
-            name = file[sep_index + 1 if file[sep_index + 1] is not ' ' else sep_index + 2: file.find('.mp3')].title()
-
-            my_playlist.songs.append(Song(name, artist, os.path.join(PATH_TO_MUSIC_LIB, file)))
+            my_playlist.songs.append(Song(os.path.join(PATH_TO_MUSIC_LIB, file)))
 
     print(my_playlist.string())
     return my_playlist
