@@ -1,12 +1,20 @@
 from kivy.app import App
 from kivy.lang import Builder
+from kivy.properties import ObjectProperty
+from kivy.uix.floatlayout import FloatLayout
+from kivy.uix.gridlayout import GridLayout
+from kivy.uix.label import Label
 from kivy.uix.screenmanager import ScreenManager, Screen
 from kivy.uix.image import Image
-from kivy.uix.button import ButtonBehavior
+from kivy.uix.button import ButtonBehavior, Button
 from kivy.core.window import Window
 from kivy.core.audio import SoundLoader
+from kivy.uix.scrollview import ScrollView
 from kivy.uix.textinput import TextInput
+from kivy.uix.widget import Widget
 
+from src.music_utils.PlaylistHandler import *
+from src.music_utils.Song import Song
 from src.utils.StableBoolean import StableBoolean
 from src.utils.Constants import GUIFiles
 
@@ -80,10 +88,10 @@ class ImageButton(ButtonBehavior, Image):
             self.opacity = 0.5
 
         else:
-            self.opacity = 0.75
+            self.opacity = 1
 
     def on_press(self, *args):
-        self.opacity = 1
+        self.opacity = 0.3
 
 
 class TransTextInput(TextInput):
@@ -91,12 +99,38 @@ class TransTextInput(TextInput):
         super(TransTextInput, self).__init__(**kwargs)
 
 
+class SongWidget(Widget):
+    def __init__(self, **kwargs):
+        super(SongWidget, self).__init__(**kwargs)
+        self.song_obj = Song(r'A:\Software\Projects\HorizonMusic\src\music_utils\music_lib\Imagine Dragons - Shots.mp3')
+        self.widget_title = "{} | {}".format(self.song_obj.artist, self.song_obj.song_name)
+
+class PlaylistWidget(Widget):
+    def __init__(self, **kwargs):
+        super(PlaylistWidget, self).__init__(**kwargs)
+        # self.playlist_obj = PlaylistHandler().all_music
+        # self.init_y_pos = 700
+        # diff = 0
+        # for song in self.playlist_obj.songs:
+        #     widg = SongWidget()
+        #     widg.song_obj = song
+        #     widg.pos = (0, self.init_y_pos - diff)
+        #
+        #     self.grid.add_widget(widg)
+        #
+        #     diff  += 120
+
+
+'''
+    App
+'''
 class HorizonMusicApp(App):
     def __init__(self, logger, **kwargs):
         super(HorizonMusicApp, self).__init__(**kwargs)
         self.gui_files = GUIFiles(logger)  # load the gui files
         self.kv_des = Builder.load_file(self.gui_files.KV_DES_FILE)
         self.click_audio = SoundLoader.load(self.gui_files.CLICK_SOUND)
+        # self.playlists = PlaylistHandler()
 
     def click_sound(self, *args):
         if self.click_audio.state == 'play':

@@ -22,12 +22,19 @@ class GUIFiles:
         self.QUIT_WIDGET = os.path.join(self.GUI_PATH, r'images\widgets\Quit.png')
         self.SEARCH_BAR_WIDGET = os.path.join(self.GUI_PATH, r'images\widgets\SearchBar.png')
         self.SEARCH_WIDGET = os.path.join(self.GUI_PATH, r'images\widgets\SearchIcon.png')
+        self.SONG_BACK = os.path.join(self.GUI_PATH, r'images\screens\SongBack.png')
+        self.MEDIA_PLAYER_PLAY_PAUSE = os.path.join(self.GUI_PATH, r'images\widgets\PlayPause.png')
+        self.MEDIA_PLAYER_PREV = os.path.join(self.GUI_PATH, r'images\widgets\prev.png')
+        self.MEDIA_PLAYER_NEXT = os.path.join(self.GUI_PATH, r'images\widgets\next.png')
+        self.MEDIA_PLAYER_BACK = os.path.join(self.GUI_PATH, r'images\screens\MediaPlayerBack.png')
+
         self.INTRO = os.path.join(self.GUI_PATH, r'videos\Intro.avi')
 
         self.files = [self.KV_DES_FILE, self.CLICK_SOUND, self.BACKGROUND, self.INFO_SCREEN,
                       self.BACKWARD_WINDOW_WIDGET, self.BACKWARD_WINDOW_WIDGET, self.BACK_TO_MENU_WIDGET,
                       self.INFO_WIDGET, self.ALL_MUSIC_WIDGET, self.FOLDER_WIDGET, self.PLAYLIST_WIDGET,
-                      self.QUIT_WIDGET, self.SEARCH_BAR_WIDGET, self.SEARCH_WIDGET, self.INTRO]
+                      self.QUIT_WIDGET, self.SEARCH_BAR_WIDGET, self.SEARCH_WIDGET, self.INTRO, self.MEDIA_PLAYER_BACK,
+                      self.SONG_BACK, self.MEDIA_PLAYER_NEXT, self.MEDIA_PLAYER_PLAY_PAUSE, self.MEDIA_PLAYER_PREV]
 
         self.is_load = True
         for file in self.files:

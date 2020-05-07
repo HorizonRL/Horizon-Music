@@ -5,6 +5,7 @@
 #: import Video kivy.uix.video.Video
 #: import Image kivy.uix.image.Image
 #: import ScrollView kivy.uix.scrollview.ScrollView
+#=============================================
 
 WindowManager:
     transition: NoTransition()
@@ -16,6 +17,7 @@ WindowManager:
     MySongsScreen:
     AllSongsScreen:
 
+#=============================================
 
 <Intro>:
     name: "intro"
@@ -37,6 +39,7 @@ WindowManager:
             app.root.current = "Menu"
             intro.state = 'stop'
 
+#=============================================
     
 <MenuScreen>:
     name: "Menu"
@@ -109,6 +112,7 @@ WindowManager:
 
         pos: 1200, 750
 
+#=============================================
 
 <InfoScreen>:
     name: "Info"
@@ -127,7 +131,7 @@ WindowManager:
 
     Folder:
         id: folderBTN1
-        playlist_name: "Name"
+        playlist_name: "blah"
 
         pos: 130, 550
         size: 500, 300
@@ -137,12 +141,14 @@ WindowManager:
 
     BackToMenuBTN:
 
+#=============================================
+
 <MySongsScreen>:
     name:"MySongs"
 
     BackgroundImage:
 
-    ScrollView:
+    MediaPlayer:
 
     ImageButton:
         id: backWinBTN
@@ -154,18 +160,21 @@ WindowManager:
         on_release: 
             app.root.current = "Libs"
 
+#=============================================
 
 <AllSongsScreen>:
     name: "AllSongs"
 
     BackgroundImage:
 
-    ScrollView:
+    MediaPlayer:
 
     BackToMenuBTN:
 
+    SongWidget:
 
-# ====== my des ======
+# ================== my des ==================
+
 <SmoothButton@Button>:
 
     background_color: (0.0, 0.0, 0.0, 0.0)
@@ -186,6 +195,7 @@ WindowManager:
             pos: self.pos
             radius: self.border_radius
 
+# =================
 
 <imageButton>:
     size_hint: None, None
@@ -195,11 +205,13 @@ WindowManager:
     on_press:
         app.click_sound()
 
+# =================
 
 <BackgroundImage@Image>:
     source: app.gui_files.BACKGROUND
     size: self.texture_size
 
+# =================
 
 <BackToMenuBTN@ImageButton>:
     source: app.gui_files.BACK_TO_MENU_WIDGET
@@ -209,11 +221,12 @@ WindowManager:
     on_release: 
         app.root.current = "Menu"
 
+# =================
 
 <Folder@ImageButton>:
     id: baseFolder
     source: app.gui_files.FOLDER_WIDGET
-    playlist_name: 'Blah'
+    playlist_name: 'New Folder'
 
     TransTextInput:
         text: baseFolder.playlist_name
@@ -223,6 +236,7 @@ WindowManager:
 
         disabled: True
     
+# =================
 
 <TransTextInput>:
     multiline: False
@@ -237,3 +251,51 @@ WindowManager:
 
     on_text_validate:
         app.click_sound()
+
+# =================
+
+<MediaPlayer@Image>:
+    id: mediaPlayer
+    source: app.gui_files.MEDIA_PLAYER_BACK
+    pos: 0,-450
+    size: self.texture_size[0] - 20 , self.texture_size[1]
+
+    ImageButton:
+        id: playPause
+        source: app.gui_files.MEDIA_PLAYER_PLAY_PAUSE
+        pos: mediaPlayer.x + 867, mediaPlayer.y + 430
+        size: 150, 150
+        
+    ImageButton:
+        id: next
+        source: app.gui_files.MEDIA_PLAYER_NEXT
+        pos: playPause.x + 173, playPause.y + 13
+        size: 125, 125
+    
+    ImageButton:
+        id: prev
+        source: app.gui_files.MEDIA_PLAYER_PREV
+        pos: playPause.x - 150, next.y + 3
+        size: 125, 125
+
+# =================
+
+<SongWidget>:
+    id: song
+    ImageButton:
+        id: songBody
+        source: app.gui_files.SONG_BACK
+        pos: 0, 700
+        size: self.texture_size
+    
+        Label:
+            id: songName
+            text: song.widget_title
+            font_size: 50
+            bold: True
+            size: songBody.texture_size
+            halign: 'left'
+            pos: songBody.x - 425, songBody.y
+            text_size: 800, None
+
+#=================

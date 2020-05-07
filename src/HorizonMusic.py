@@ -1,5 +1,5 @@
-import os
-os.environ["KIVY_NO_CONSOLELOG"] = "1"
+# import os
+# os.environ["KIVY_NO_CONSOLELOG"] = "1"
 
 from src.ui.UIHandler import HorizonMusicApp
 from src.utils.Logger import Logger
