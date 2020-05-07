@@ -164,14 +164,11 @@ WindowManager:
 
 <AllSongsScreen>:
     name: "AllSongs"
-
     BackgroundImage:
-
-    MediaPlayer:
+    
+    MediaPlayer:     
 
     BackToMenuBTN:
-
-    SongWidget:
 
 # ================== my des ==================
 
@@ -257,45 +254,25 @@ WindowManager:
 <MediaPlayer@Image>:
     id: mediaPlayer
     source: app.gui_files.MEDIA_PLAYER_BACK
-    pos: 0,-450
+    pos: 0,-460
     size: self.texture_size[0] - 20 , self.texture_size[1]
 
     ImageButton:
         id: playPause
         source: app.gui_files.MEDIA_PLAYER_PLAY_PAUSE
-        pos: mediaPlayer.x + 867, mediaPlayer.y + 430
+        pos: mediaPlayer.x + 867, mediaPlayer.y + 435
         size: 150, 150
         
     ImageButton:
         id: next
         source: app.gui_files.MEDIA_PLAYER_NEXT
-        pos: playPause.x + 173, playPause.y + 13
+        pos: playPause.x + 173, playPause.y + 11
         size: 125, 125
     
     ImageButton:
         id: prev
         source: app.gui_files.MEDIA_PLAYER_PREV
-        pos: playPause.x - 150, next.y + 3
+        pos: playPause.x - 150, next.y + 4
         size: 125, 125
 
 # =================
-
-<SongWidget>:
-    id: song
-    ImageButton:
-        id: songBody
-        source: app.gui_files.SONG_BACK
-        pos: 0, 700
-        size: self.texture_size
-    
-        Label:
-            id: songName
-            text: song.widget_title
-            font_size: 50
-            bold: True
-            size: songBody.texture_size
-            halign: 'left'
-            pos: songBody.x - 425, songBody.y
-            text_size: 800, None
-
-#=================

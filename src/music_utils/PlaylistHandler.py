@@ -9,12 +9,10 @@ def create_all_music_playlist():
         if file.endswith(".mp3"):
             my_playlist.songs.append(Song(os.path.join(PATH_TO_MUSIC_LIB, file)))
 
+    print(my_playlist.string())
     return my_playlist
 
 
 class PlaylistHandler:
     def __init__(self):
         self.all_music = create_all_music_playlist()
-
-if __name__ == '__main__':
-    PlaylistHandler()
