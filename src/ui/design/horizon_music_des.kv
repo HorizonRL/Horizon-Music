@@ -1,6 +1,5 @@
 #:kivy 1.10.0
 
-#: import FadeTransition kivy.uix.screenmanager.FadeTransition
 #: import NoTransition kivy.uix.screenmanager.NoTransition
 #: import Video kivy.uix.video.Video
 #: import Image kivy.uix.image.Image
@@ -276,3 +275,23 @@ WindowManager:
         size: 125, 125
 
 # =================
+
+<SongWidget>:
+    id: song
+    ImageButton:
+        id: songBody
+        source: app.gui_files.SONG_BACK
+        # pos: 0, 700
+        size: self.texture_size
+
+        Label:
+            id: songName
+            text: "blah"
+            font_size: 50
+            bold: True
+            size: songBody.texture_size
+            halign: 'left'
+            pos: songBody.x - 425, songBody.y
+            text_size: 800, None
+
+#=================
