@@ -10,7 +10,8 @@ class Song:
         sep_index = file.find('-')
         lib_folder = "music_lib"
 
-        if file is not file.strip():
+        if file is not '':
+
             self.song_name = file[sep_index + 1 if file[sep_index + 1] is not ' ' else sep_index + 2:
                                   file.find('.mp3')].title()
 

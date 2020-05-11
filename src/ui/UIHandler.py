@@ -99,7 +99,7 @@ class TransTextInput(TextInput):
         super(TransTextInput, self).__init__(**kwargs)
 
 
-class SearchInput(TransTextInput, ButtonBehavior):
+class SearchInput(TransTextInput):
     def __init__(self, **kwargs):
         super(TransTextInput, self).__init__(**kwargs)
         self.search = ''
@@ -119,13 +119,8 @@ class SearchInput(TransTextInput, ButtonBehavior):
         return False
 
     def act_on_valid(self, is_valid):
-        search = self.text
         if not is_valid:
             self.text = "Can't find this search!"
-            self.readonly = True
-            if self.on_press():
-                self.text = search
-                self.readonly = False
 
 
 class VolumeUp(ImageButton):
