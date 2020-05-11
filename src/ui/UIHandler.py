@@ -1,11 +1,11 @@
 from kivy.app import App
 from kivy.lang import Builder
-from kivy.uix.floatlayout import FloatLayout
-from kivy.uix.gridlayout import GridLayout
+
+from pycaw.pycaw import AudioUtilities, ISimpleAudioVolume
 
 from kivy.uix.screenmanager import ScreenManager, Screen
 from kivy.uix.image import Image
-from kivy.uix.button import ButtonBehavior, Button
+from kivy.uix.button import ButtonBehavior
 from kivy.core.window import Window
 from kivy.core.audio import SoundLoader
 from kivy.uix.scrollview import ScrollView
@@ -13,6 +13,7 @@ from kivy.uix.scrollview import ScrollView
 from kivy.uix.textinput import TextInput
 from kivy.uix.widget import Widget
 
+from src.music_utils.PlayQueue import PlayQueue
 from src.music_utils.PlaylistHandler import PlaylistHandler
 from src.music_utils.Song import Song
 from src.utils.StableBoolean import StableBoolean
@@ -62,7 +63,7 @@ class ImageButton(ButtonBehavior, Image):
 
         self.r = 0
 
-        self.is_mouse_over = StableBoolean(false_threshold=2)
+        self.is_mouse_over = StableBoolean(false_threshold=3)
         Window.bind(mouse_pos=self.mouse_over_ani)
         self.bind(on_press=self.on_press)
 
@@ -98,7 +99,7 @@ class TransTextInput(TextInput):
         super(TransTextInput, self).__init__(**kwargs)
 
 
-class SearchInput(TransTextInput):
+class SearchInput(TransTextInput, ButtonBehavior):
     def __init__(self, **kwargs):
         super(TransTextInput, self).__init__(**kwargs)
         self.search = ''
@@ -118,11 +119,56 @@ class SearchInput(TransTextInput):
         return False
 
     def act_on_valid(self, is_valid):
+        search = self.text
         if not is_valid:
             self.text = "Can't find this search!"
-            if self.on_double_tap():
-                self.text = ''
+            self.readonly = True
+            if self.on_press():
+                self.text = search
+                self.readonly = False
 
+
+class VolumeUp(ImageButton):
+    def __init__(self, **kwargs):
+        super(VolumeUp, self).__init__(**kwargs)
+        self.bind(on_press=self.act)
+        self.session = AudioUtilities.GetAllSessions()
+        self.volume = self.session._ctl.QueryInterface(ISimpleAudioVolume)
+
+    def act(self):
+        self.volume.SetMasterVolume(self.volume.GetMasterVolume() + 1, None)
+
+
+class VolumeDown(ImageButton):
+    def __init__(self, **kwargs):
+        super(VolumeDown, self).__init__(**kwargs)
+        self.bind(on_press=self.act)
+        self.session = AudioUtilities.GetAllSessions()
+        self.volume = self.session._ctl.QueryInterface(ISimpleAudioVolume)
+
+    def act(self):
+        self.volume.SetMasterVolume(self.volume.GetMasterVolume() - 1, None)
+
+
+song_queue = PlayQueue()
+
+
+class PlayPause(ImageButton):
+    def __init__(self, **kwargs):
+        super(PlayPause, self).__init__(**kwargs)
+        self.bind(on_press=song_queue.current.toggle_state())
+
+
+class NextSong(ImageButton):
+    def __init__(self, **kwargs):
+        super(NextSong, self).__init__(**kwargs)
+        self.bind(on_press=song_queue.skip())
+
+
+class PrevSong(ImageButton):
+    def __init__(self, **kwargs):
+        super(PrevSong, self).__init__(**kwargs)
+        self.bind(on_press=song_queue.back())
 
 
 class SongWidget(Widget):

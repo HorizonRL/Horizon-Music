@@ -23,5 +23,17 @@ class PlayQueue:
         self.prev = self.playlist.songs[self.song_index - 1]
         self.next = self.playlist.songs[self.song_index + 1]
 
+    def skip(self):
+        self.prev = self.current
+        self.current = self.next
+        self.song_index += 1
+        self.next = self.playlist.songs[self.song_index]
+
+    def back(self):
+        self.next = self.current
+        self.current = self.prev
+        self.song_index -= 1
+        self.next = self.playlist.songs[self.song_index]
+
     def string(self):
         return "Current: {}\nPrev: {}\nNext: {}".format(self.current, self.current, self.next)
