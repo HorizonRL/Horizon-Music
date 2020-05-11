@@ -95,10 +95,10 @@ WindowManager:
         stretch: True
         keep_ratio: True
 
-        TransTextInput:
-            font_size: 45
+        SearchInput:
+            font_size: 33
 
-            pos: 608, 755
+            pos: 605, 743
             size: 520, 80
 
             canvas.before:
@@ -247,6 +247,10 @@ WindowManager:
 
     on_text_validate:
         app.click_sound()
+
+<SearchInput>:
+    on_text_validate:
+        root.get_search()
 
 # =================
 

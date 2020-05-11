@@ -13,6 +13,7 @@ from kivy.uix.scrollview import ScrollView
 from kivy.uix.textinput import TextInput
 from kivy.uix.widget import Widget
 
+from src.music_utils.PlaylistHandler import PlaylistHandler
 from src.music_utils.Song import Song
 from src.utils.StableBoolean import StableBoolean
 from src.utils.Constants import GUIFiles
@@ -97,10 +98,37 @@ class TransTextInput(TextInput):
         super(TransTextInput, self).__init__(**kwargs)
 
 
+class SearchInput(TransTextInput):
+    def __init__(self, **kwargs):
+        super(TransTextInput, self).__init__(**kwargs)
+        self.search = ''
+        self.playlist = PlaylistHandler().all_music
+
+    def get_search(self):
+        self.search = self.text.replace(' ', '').casefold()
+
+        self.act_on_valid(self.validate())
+
+    def validate(self):
+        for song in self.playlist.songs:
+            song_name = song.song_name.replace(' ', '').casefold()
+            if song_name in self.search:
+                return True
+
+        return False
+
+    def act_on_valid(self, is_valid):
+        if not is_valid:
+            self.text = "Can't find this search!"
+            if self.on_double_tap():
+                self.text = ''
+
+
+
 class SongWidget(Widget):
     def __init__(self, **kwargs):
         super(SongWidget, self).__init__(**kwargs)
-        self.song_obj = Song(r'A:\Software\Projects\HorizonMusic\src\music_utils\music_lib\Imagine Dragons - Shots.mp3')
+        self.song_obj = Song(r'')
         self.widget_title = "{} | {}".format(self.song_obj.artist, self.song_obj.song_name)
 
 
@@ -128,6 +156,6 @@ class HorizonMusicApp(App):
         self.title = "Horizon Music" + chr(169)
 
         Window.size = (1920, 1080)
-        Window.fullscreen = True
+        Window.fullscreen = False
 
         return self.kv_des
