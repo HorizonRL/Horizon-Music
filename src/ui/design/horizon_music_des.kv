@@ -3,7 +3,6 @@
 #: import NoTransition kivy.uix.screenmanager.NoTransition
 #: import Video kivy.uix.video.Video
 #: import Image kivy.uix.image.Image
-#: import ScrollView kivy.uix.scrollview.ScrollView
 #=============================================
 
 WindowManager:
@@ -31,25 +30,26 @@ WindowManager:
         id: contBTN
         source: app.gui_files.CONTINUE_WINDOW_WIDGET
 
-        pos: 1790, 15
+        pos_hint: {'bottom': 0.95, 'right': 1}
         size: 118, 118
 
         on_release: 
             app.root.current = "Menu"
             intro.state = 'stop'
 
+# Menu 
 #=============================================
     
 <MenuScreen>:
     name: "Menu"
-
+    
     BackgroundImage:
 
     ImageButton:
         id: infoBTN
         source: app.gui_files.INFO_WIDGET
 
-        pos: 1310, 165
+        pos_hint: {'center_x': 0.8, 'center_y': 0.325}
         size: 360, 360
         
         on_release: 
@@ -59,7 +59,7 @@ WindowManager:
         id: musicBTN
         source: app.gui_files.ALL_MUSIC_WIDGET
 
-        pos: 750, 105
+        pos_hint: {'center_x': 0.5, 'center_y': 0.3}
         size: 410, 410
         
         on_release: 
@@ -69,7 +69,7 @@ WindowManager:
         id: playlistBTN
         source: app.gui_files.PLAYLIST_WIDGET
 
-        pos: 250, 165
+        pos_hint: {'center_x': 0.2, 'center_y': 0.330}
         size: 350, 350
         
         on_release: 
@@ -79,7 +79,7 @@ WindowManager:
         id: quitBTN
         source: app.gui_files.QUIT_WIDGET
 
-        pos: 1790, 15
+        pos_hint: {'bottom': 0.95, 'right': 1}
         size: 118, 118
 
         on_release:
@@ -89,7 +89,7 @@ WindowManager:
         id:SearchBar
         source: app.gui_files.SEARCH_BAR_WIDGET
 
-        pos: 580, 500
+        pos_hint: {'center_x': 0.465, 'center_y': 0.755}
         size: 600, 600
         size_hint: None, None
         stretch: True
@@ -98,7 +98,7 @@ WindowManager:
         SearchInput:
             font_size: 33
 
-            pos: 605, 743
+            pos: 610, 743
             size: 520, 80
 
             canvas.before:
@@ -109,8 +109,10 @@ WindowManager:
         id:SearchIcon
         source: app.gui_files.SEARCH_WIDGET
 
-        pos: 1200, 750
+        pos_hint: {'center_x': 0.65, 'center_y': 0.755}
+        size: 80,80
 
+# Info
 #=============================================
 
 <InfoScreen>:
@@ -118,10 +120,14 @@ WindowManager:
 
     Image:
         source: app.gui_files.INFO_SCREEN
-        size: self.texture_size
+        size_hint: 1,1
+        keep_ratio: False
+        allow_stretch: True
 
     BackToMenuBTN:
 
+# Downloaded songs / playlist selection
+#=============================================
 
 <MyLibsScreen>:
     name: "Libs"
@@ -132,7 +138,7 @@ WindowManager:
         id: folderBTN1
         playlist_name: "blah"
 
-        pos: 130, 550
+        pos_hint: {'center_x': 0.148, 'center_y': 0.6}
         size: 500, 300
 
         on_release:
@@ -140,6 +146,7 @@ WindowManager:
 
     BackToMenuBTN:
 
+# My songs
 #=============================================
 
 <MySongsScreen>:
@@ -153,12 +160,13 @@ WindowManager:
         id: backWinBTN
         source: app.gui_files.BACKWARD_WINDOW_WIDGET
 
-        pos: 1790, 15
+        pos_hint: {'bottom': 0.95, 'right': 1}
         size: 118, 118
 
         on_release: 
             app.root.current = "Libs"
 
+# Song lib
 #=============================================
 
 <AllSongsScreen>:
@@ -171,28 +179,6 @@ WindowManager:
 
 # ================== my des ==================
 
-<SmoothButton@Button>:
-
-    background_color: (0.0, 0.0, 0.0, 0.0)
-    background_normal: ''
-
-    back_color: (0.157, 0.455, 0.753, 0.971)
-    border_radius: [13]
-
-    opacity: 1 if self.state == 'normal' else 0.5
-
-    canvas.before:
-
-        Color:
-            rgba: self.back_color
-
-        RoundedRectangle:
-            size: self.size
-            pos: self.pos
-            radius: self.border_radius
-
-# =================
-
 <imageButton>:
     size_hint: None, None
     stretch: True
@@ -201,23 +187,25 @@ WindowManager:
     on_press:
         app.click_sound()
 
-# =================
+#=============================================
 
 <BackgroundImage@Image>:
     source: app.gui_files.BACKGROUND
-    size: self.texture_size
+    size_hint: 1,1
+    keep_ratio: False
+    allow_stretch: True
 
-# =================
+# #=============================================
 
 <BackToMenuBTN@ImageButton>:
     source: app.gui_files.BACK_TO_MENU_WIDGET
-    pos: 1790, 15
+    pos_hint: {'bottom': 0.95, 'right': 1}
     size: 118, 118
 
     on_release: 
         app.root.current = "Menu"
 
-# =================
+# #=============================================
 
 <Folder@ImageButton>:
     id: baseFolder
@@ -232,7 +220,7 @@ WindowManager:
 
         disabled: True
     
-# =================
+# #=============================================
 
 <TransTextInput>:
     multiline: False
@@ -252,33 +240,32 @@ WindowManager:
     on_text_validate:
         root.get_search()
 
-# =================
-
+# #=============================================
 <MediaPlayer@Image>:
     id: mediaPlayer
     source: app.gui_files.MEDIA_PLAYER_BACK
     pos: 0,-460
     size: self.texture_size[0] - 20 , self.texture_size[1]
 
-    ImageButton:
+    ImageButton: #PlayPause:
         id: playPause
         source: app.gui_files.MEDIA_PLAYER_PLAY_PAUSE
         pos: mediaPlayer.x + 867, mediaPlayer.y + 435
         size: 150, 150
         
-    ImageButton:
+    ImageButton: #NextSong:
         id: next
         source: app.gui_files.MEDIA_PLAYER_NEXT
         pos: playPause.x + 173, playPause.y + 11
         size: 125, 125
     
-    ImageButton:
+    ImageButton: #PrevSong:
         id: prev
         source: app.gui_files.MEDIA_PLAYER_PREV
         pos: playPause.x - 150, next.y + 4
         size: 125, 125
 
-# =================
+# #=============================================
 
 <SongWidget>:
     id: song
@@ -298,4 +285,4 @@ WindowManager:
             pos: songBody.x - 425, songBody.y
             text_size: 800, None
 
-#=================
+#=============================================
