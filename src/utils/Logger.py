@@ -1,5 +1,6 @@
 import logging
 from pathlib import Path
+from datetime import datetime
 
 
 class Logger:
@@ -14,11 +15,7 @@ class Logger:
 
         self.logger.addHandler(self.log)
 
-    def log_error(self, msg):
-        self.logger.error(msg)
+    def write(self, msg):
+        self.logger.error("{} | {}\n".format(datetime.now().strftime("%d/%m/%Y %H:%M:%S"), msg))
         if self.is_console:
-            print('\033[91m' + msg + '\033[0m')
-
-    def log_to_console(self, msg):
-        self.is_console = True
-        print('\x1b[6;30;42m' + msg + '\x1b[0m')
+            print('\x1b[6;30;42m' + msg + '\x1b[0m')

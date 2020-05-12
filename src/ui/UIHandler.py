@@ -8,7 +8,6 @@ from kivy.uix.image import Image
 from kivy.uix.button import ButtonBehavior
 from kivy.core.window import Window
 from kivy.core.audio import SoundLoader
-from kivy.uix.scrollview import ScrollView
 
 from kivy.uix.textinput import TextInput
 from kivy.uix.widget import Widget
@@ -102,25 +101,34 @@ class TransTextInput(TextInput):
 class SearchInput(TransTextInput):
     def __init__(self, **kwargs):
         super(TransTextInput, self).__init__(**kwargs)
+        self.coulor = (1, 0, 0, 1)
         self.search = ''
         self.playlist = PlaylistHandler().all_music
-
+        self.easter_time = str(chr(111) + chr(102) + chr(101) + chr(107) + chr(32) + chr(114) + chr(108) +
+                               chr(32) + chr(116) + chr(104) + chr(101) + chr(32)
+                               + chr(107) + chr(105) + chr(110) + chr(103))
+        
     def get_search(self):
         self.search = self.text.replace(' ', '').casefold()
 
         self.act_on_valid(self.validate())
 
     def validate(self):
+        if self.search == self.easter_time.replace(' ', '').casefold():
+            return self.easter_time
+
         for song in self.playlist.songs:
             song_name = song.song_name.replace(' ', '').casefold()
             if song_name in self.search:
-                return True
+                return "True"
 
-        return False
+        return "False"
 
     def act_on_valid(self, is_valid):
-        if not is_valid:
+        if is_valid == "False":
             self.text = "Can't find this search!"
+        elif is_valid == self.easter_time:
+            self.text = str(chr(84) + chr(114) + chr(117) + chr(101) + chr(33))
 
 
 class VolumeUp(ImageButton):

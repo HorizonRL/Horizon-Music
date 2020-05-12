@@ -33,7 +33,7 @@ WindowManager:
         pos_hint: {'bottom': 0.95, 'right': 1}
         size: 118, 118
 
-        on_release: 
+        on_release:
             app.root.current = "Menu"
             intro.state = 'stop'
 
@@ -228,10 +228,11 @@ WindowManager:
     background_color: (0,0,0,0)
     cursor_color: (0.157, 0.455, 0.9, 0.971)
     cursor_width: 3
+    coulor: (0.157, 0.455, 1, 1)
 
     canvas.before:
         Color:
-            rgba: 0.157, 0.455, 1, 1
+            rgba: self.coulor
 
     on_text_validate:
         app.click_sound()

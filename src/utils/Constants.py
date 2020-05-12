@@ -10,6 +10,7 @@ class GUIFiles:
 
         self.KV_DES_FILE = os.path.join(self.GUI_PATH, r'design\horizon_music_des.kv')
         self.CLICK_SOUND = os.path.join(self.GUI_PATH, r'sounds\click.mp3')
+        self.ERROR_SOUND = os.path.join(self.GUI_PATH, r'sounds\error.mp3')
         self.BACKGROUND = os.path.join(self.GUI_PATH, r'images\screens\BackG.png')
         self.INFO_SCREEN = os.path.join(self.GUI_PATH, r'images\screens\info.png')
         self.BACKWARD_WINDOW_WIDGET = os.path.join(self.GUI_PATH, r'images\widgets\Backw.png')
@@ -44,9 +45,14 @@ class GUIFiles:
 
             except FileNotFoundError:
                 self.is_load = False
-                self.logger.log_error("ERROR! Can't load file or file is corrupted: {}".format(file))
+                self.logger.write("ERROR! Can't load file or file is corrupted: {}".format(file))
 
             f.close()
 
         if self.is_load:
-            self.logger.log_to_console("Loaded all GUI files successfully!")
+            self.logger.write("Loaded all GUI files successfully!")
+
+
+class Network:
+    PORT = 1690
+    SERVER_IP = '127.0.0.1'  # '192.168.1.16' -> not local
