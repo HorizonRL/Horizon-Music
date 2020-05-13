@@ -10,6 +10,8 @@ To use:
 
 3. Pip install pycaw.
   https://pycaw.readthedocs.io/en/latest/
+
+4. Get the uncomitted files.
   
 You are set to go!
 
