@@ -2,6 +2,7 @@ from kivy.app import App
 from kivy.lang import Builder
 
 from pycaw.pycaw import AudioUtilities, ISimpleAudioVolume
+from win32api import GetSystemMetrics
 
 from kivy.uix.screenmanager import ScreenManager, Screen
 from kivy.uix.image import Image
@@ -204,7 +205,7 @@ class HorizonMusicApp(App):
     def build(self):
         self.title = "Horizon Music" + chr(169)
 
-        Window.size = (1920, 1080)
+        Window.size = (GetSystemMetrics(0), GetSystemMetrics(1))
         Window.fullscreen = False
 
         return self.kv_des

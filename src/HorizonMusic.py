@@ -22,9 +22,8 @@ if __name__ == "__main__":
         client.connect((params.SERVER_IP, params.PORT))
 
     except ConnectionRefusedError as err:
-        log.write("Connection timeout - You are using Horizon Music offline |{}".format(err))
+        log.write("Connection timeout! - You are using Horizon Music offline |{}".format(err))
 
     finally:
-        log.write("CONNECTED!")
         horizon_music.app.run()
         log.write("{} EXIT\n".format(socket.gethostname()))
