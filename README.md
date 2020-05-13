@@ -12,6 +12,9 @@ To use:
   https://pycaw.readthedocs.io/en/latest/
   
 You are set to go!
-4.a. to run the client - src/HorizoMusic.py
-4.b. to run the server - src/Server.py
-4.c. to change the ip and port - src/utils/Constants.py - Network
+
+1. to run the client - src/HorizoMusic.py
+
+2. to run the server - src/Server.py
+
+3. to change the ip and port - src/utils/Constants.py - Network
