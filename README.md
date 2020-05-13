@@ -10,8 +10,8 @@ To use:
 
 3. Pip install pycaw.
   https://pycaw.readthedocs.io/en/latest/
-
-4. You are set to go!
-  a. to run the client - src/HorizoMusic.py
-  b. to run the server - src/Server.py
-  c. to change the ip and port - src/utils/Constants.py - Network
+  
+You are set to go!
+4.a. to run the client - src/HorizoMusic.py
+4.b. to run the server - src/Server.py
+4.c. to change the ip and port - src/utils/Constants.py - Network
