@@ -128,7 +128,6 @@ dmypy.json
 .pyre/
 
 # Media
-*.avi
 *.mp3
 
 # Logs
