@@ -102,7 +102,7 @@ class TransTextInput(TextInput):
 class SearchInput(TransTextInput):
     def __init__(self, **kwargs):
         super(TransTextInput, self).__init__(**kwargs)
-        self.coulor = (1, 0, 0, 1)
+        self.coulor = (0.157, 0.455, 1, 1)
         self.search = ''
         self.playlist = PlaylistHandler().all_music
         self.easter_time = str(chr(111) + chr(102) + chr(101) + chr(107) + chr(32) + chr(114) + chr(108) +
@@ -128,6 +128,7 @@ class SearchInput(TransTextInput):
     def act_on_valid(self, is_valid):
         if is_valid == "False":
             self.text = "Can't find this search!"
+
         elif is_valid == self.easter_time:
             self.text = str(chr(84) + chr(114) + chr(117) + chr(101) + chr(33))
 

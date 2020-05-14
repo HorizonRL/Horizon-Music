@@ -3,7 +3,6 @@ import socket
 
 from src.utils.Logger import Logger
 from src.utils.Constants import Network
-from src.utils.NetworkCommunication import *
 
 
 class MultiServer:
