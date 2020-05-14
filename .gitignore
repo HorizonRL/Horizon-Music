@@ -129,6 +129,7 @@ dmypy.json
 
 # Media
 *.mp3
+*.avi
 
 # Logs
 *.log

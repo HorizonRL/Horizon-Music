@@ -3,19 +3,20 @@ import socket
 
 from src.utils.Logger import Logger
 from src.utils.Constants import Network
+from src.utils.NetworkCommunication import *
 
 
 class MultiServer:
     def __init__(self, logger):
-        self.ss = socket.socket()
-        self.ss.bind(('', Network().PORT))
-        self.ss.listen(1)
+        self.s_s = socket.socket()
+        self.s_s.bind(('', Network().PORT))
+        self.s_s.listen(1)
 
         self.clients = []
         self.log = logger
 
     def accept(self):
-        sock, address = self.ss.accept()
+        sock, address = self.s_s.accept()
         self.clients += [threading.Thread(target=self.handle_client, args=(sock, address)).start()]
 
     def handle_client(self, sock, address):
