@@ -10,8 +10,8 @@
             "request": "launch",
             "program": "${workspaceRoot}/src/HorizonMusic.py",
             "console": "integratedTerminal",
-            "pythonPath": "${config:python.interpreterPath}",
-            "cwd": "${workspaceRoot}",
+            "envFile": "${workspaceFolder}/env",
+            "pythonPath": "${workspaceFolder}/env/Scripts/python.exe",
             "env": {
                 "PYTHONPATH": "${workspaceFolder}"
             }
@@ -22,8 +22,8 @@
             "request": "launch",
             "program": "${workspaceRoot}/src/Server.py",
             "console": "integratedTerminal",
-            "pythonPath": "${config:python.interpreterPath}",
-            "cwd": "${workspaceRoot}",
+            "envFile": "${workspaceFolder}/env",
+            "pythonPath": "${workspaceFolder}/env/Scripts/python.exe",
             "env": {
                 "PYTHONPATH": "${workspaceFolder}"
             }
