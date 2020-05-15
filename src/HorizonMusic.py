@@ -17,7 +17,6 @@ class HorizonMusic:
 if __name__ == "__main__":
     client = socket.socket()
     log = Logger(log_name="{}-log".format(str(socket.gethostname())))
-    horizon_music = HorizonMusic(log)
 
     params = Network()
     is_online = True
@@ -34,6 +33,7 @@ if __name__ == "__main__":
             send_req(assemble_req(OperationType.ALL_SONGS.name), client, log)
             ClientDoReqs.get_all_server_songs(recv_req(client, log))
 
+        horizon_music = HorizonMusic(log)
         horizon_music.app.run()
         if is_online:
             send_req(assemble_req(OperationType.DISCONNECT.name), client, log)

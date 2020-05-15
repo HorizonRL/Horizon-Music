@@ -16,6 +16,7 @@ from kivy.uix.widget import Widget
 from src.music_utils.PlayQueue import PlayQueue
 from src.music_utils.PlaylistHandler import PlaylistHandler
 from src.music_utils.Song import Song
+from src.network import ClientDoReqs
 from src.utils.StableBoolean import StableBoolean
 from src.utils.Constants import GUIFiles
 
@@ -104,7 +105,7 @@ class SearchInput(TransTextInput):
         super(TransTextInput, self).__init__(**kwargs)
         self.coulor = (0.157, 0.455, 1, 1)
         self.search = ''
-        self.playlist = PlaylistHandler().all_music
+        self.playlist = ClientDoReqs.server_songs
         self.easter_time = str(chr(111) + chr(102) + chr(101) + chr(107) + chr(32) + chr(114) + chr(108) +
                                chr(32) + chr(116) + chr(104) + chr(101) + chr(32)
                                + chr(107) + chr(105) + chr(110) + chr(103))
@@ -119,8 +120,7 @@ class SearchInput(TransTextInput):
             return self.easter_time
 
         for song in self.playlist.songs:
-            song_name = song.song_name.replace(' ', '').casefold()
-            if song_name in self.search:
+            if song.song_name.replace(' ', '').casefold() in self.search:
                 return "True"
 
         return "False"

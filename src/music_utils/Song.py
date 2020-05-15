@@ -66,6 +66,14 @@ class Playlist:
         
         return string
 
+    def conv_to_obj(self, playlist=[], name='MyPlaylist'):
+        self.name = name
+        for song in playlist:
+            the_song = Song('')
+            the_song.song_name = song[: song.find('|') - 1]
+            the_song.artist = song[song.find('|') + 1:]
+            self.songs.append(the_song)
+
 
 class State(enum.Enum):
     PLAY = 1

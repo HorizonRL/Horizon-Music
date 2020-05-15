@@ -1,7 +1,8 @@
+from src.music_utils.Song import Playlist
 from src.network.NetworkCommunication import *
 from src.network.OperationType import OperationType
 
-server_songs = []
+server_songs = Playlist()
 
 
 def do_req(req, socket, log):
@@ -13,5 +14,6 @@ def get_all_server_songs(server_msg_raw):
     server_msg_raw = server_msg_raw.replace("'", "")
 
     global server_songs
-    server_songs = server_msg_raw.split(",")
+    server_songs.conv_to_obj(playlist=server_msg_raw.split(","), name="ServerAllSongs")
+    print(server_songs.songs)
 
