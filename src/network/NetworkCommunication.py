@@ -1,4 +1,3 @@
-import enum
 
 SEPARATOR_CHAR = "|||"
 BUFFER_SIZE = 16
@@ -26,7 +25,6 @@ def recv_req(socket_, logger):
     length = None
     req = None
     is_length_done = False
-    is_req_done = False
 
     while not is_length_done:
         data += socket_.recv(BUFFER_SIZE).decode()
@@ -39,23 +37,6 @@ def recv_req(socket_, logger):
     while len(req) <= int(length):
         req += socket_.recv(BUFFER_SIZE).decode()
 
-    logger.write("receiving request {}".format(req[len(SEPARATOR_CHAR):]))
-    return req[len(SEPARATOR_CHAR):]
-
-
-class ClientRequests(enum.Enum):
-    DISCONNECT = "DISCONNECT"
-    CONNECT = "CONNECT"
-    REQ_SONG = "REQ_SONG"
-    SEARCH = "SEARCH"
-    ALL_SONGS = "ALL_SONGS"
-    DOWNLOAD = "DOWNLOAD"
-
-
-class ServerRequests(enum.Enum):
-    CONNECT = "CONNECT"
-    SEND_SONG = "SEND_SONG"
-    SEARCH = "SEARCH"
-    ALL_SONGS = "ALL_SONGS"
-    DOWNLOAD = "DOWNLOAD"
-
+    req = req[len(SEPARATOR_CHAR):]
+    logger.write("receiving request {}".format(req))
+    return req

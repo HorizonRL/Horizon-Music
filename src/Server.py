@@ -1,8 +1,11 @@
 import threading
 import socket
 
+from src.network import ServerDoReqs
+from src.network.OperationType import OperationType
 from src.utils.Logger import Logger
 from src.utils.Constants import Network
+from src.network.NetworkCommunication import *
 
 
 class MultiServer:
@@ -19,7 +22,14 @@ class MultiServer:
         self.clients += [threading.Thread(target=self.handle_client, args=(sock, address)).start()]
 
     def handle_client(self, sock, address):
-        self.log.write("Client:{} CONNECTED".format(address))
+        self.log.write("Client: {} CONNECTED".format(address))
+        req = split_req(recv_req(sock, log))
+
+        if req[0] in OperationType.list():
+            ServerDoReqs.do_req(req, sock, address, self.log)
+
+        else:
+            log.write("Invalid request by {}".format(address))
 
     def run(self):
         self.log.write("Server starting")

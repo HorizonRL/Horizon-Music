@@ -55,4 +55,4 @@ class GUIFiles:
 
 class Network:
     PORT = 1690
-    SERVER_IP = '127.0.0.1'  # '192.168.1.16' -> not local
+    SERVER_IP = '127.0.0.1'  # '192.168.1.16' -> ip
