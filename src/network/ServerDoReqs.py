@@ -6,13 +6,13 @@ _playlist_handler = PlaylistHandler()
 
 
 def do_req(req, socket, address, log):
-    if req[0] is OperationType.ALL_SONGS.name:
-        _send_all_song_playlist(req[1:], socket, log)
-    elif req[0] is OperationType.SEARCH.name:
+    if req[0] == OperationType.ALL_SONGS.name:
+        _send_all_song_playlist(socket, log)
+    elif req[0] == OperationType.SEARCH.name:
         _search(req[1:], socket, log)
     elif req[0] == OperationType.DISCONNECT.name:
         _disconnect(socket, address, log)
-    elif req[0] is OperationType.REQ_SONG.name:
+    elif req[0] == OperationType.REQ_SONG.name:
         _send_song(req[1:], socket, log)
 
 
@@ -44,4 +44,4 @@ def _disconnect(socket, address, log):
 
 def _send_all_song_playlist(socket, log):
     # len\all_songs
-    send_req(assemble_req(OperationType.ALL_SONGS.name, _playlist_handler.all_music.songs), socket, log)
+    send_req(assemble_req(OperationType.ALL_SONGS.name, _playlist_handler.all_music.string()), socket, log)

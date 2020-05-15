@@ -1,5 +1,6 @@
 import socket
 
+from src.network import ClientDoReqs
 from src.network.OperationType import OperationType
 from src.ui.UIHandler import HorizonMusicApp
 from src.utils.Logger import Logger
@@ -29,6 +30,10 @@ if __name__ == "__main__":
         is_online = False
 
     finally:
+        if is_online:  # Get music lib
+            send_req(assemble_req(OperationType.ALL_SONGS.name), client, log)
+            ClientDoReqs.get_all_server_songs(recv_req(client, log))
+
         horizon_music.app.run()
         if is_online:
             send_req(assemble_req(OperationType.DISCONNECT.name), client, log)

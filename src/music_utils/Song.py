@@ -30,7 +30,7 @@ class Song:
         self.is_local = False
 
     def string(self):
-        return "Name: {}\nFrom: {}\nLocated: {}".format(self.song_name, self.artist, self.file_name)
+        return "{} | {}".format(self.song_name, self.artist)
 
     def set_state(self, new_state):
         if new_state is self.state:
@@ -60,9 +60,9 @@ class Playlist:
         self.name = name
     
     def string(self):
-        string = "This playlist has {} songs:\n".format(len(self.songs))
+        string = []
         for song in self.songs:
-            string += '\n' + song.string() + '\n'
+            string.append(song.string())
         
         return string
 
