@@ -20,6 +20,11 @@ def send_req(req, socket_, logger):
     socket_.send(req.encode())
 
 
+def send_file(file, socket_, logger):
+    logger.write("sending file")
+    socket_.sendall(file)
+
+
 def recv_req(socket_, logger):
     data = socket_.recv(BUFFER_SIZE).decode()
     length = None

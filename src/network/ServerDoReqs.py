@@ -28,23 +28,23 @@ def do_req(req, socket, address, log):
 
 def _search(search, socket, log):
     # len\search\song(str)
-    print("iamofekharel")
-    # _send_song(search, socket, log)
+    _send_song(search, socket, log)
 
 
 def _send_song(song_to_play, socket, log):
     # len\send_song\song(str)
+    song_to_play = song_to_play[0]
     index = 0
-    song_index = 0
     for song in _playlist_handler.all_music.songs:
-        if song.song_name is song_to_play:
-            song_index = index
+        if song.song_name.casefold().replace(' ', '') == song_to_play:
             break
 
         index += 1
 
-    file = open(_playlist_handler.all_music.songs[song_index].song_file, "r").read()
-    send_req(assemble_req(OperationType.REQ_SONG.name, file))
+    file = open(_playlist_handler.all_music.songs[index].file_name, "rb")
+    print(len(assemble_req(OperationType.REQ_SONG.name, file.read())))
+    send_req(assemble_req(OperationType.REQ_SONG.name, file.read()), socket, log)
+    file.close()
 
 
 def _disconnect(socket, address, log):
