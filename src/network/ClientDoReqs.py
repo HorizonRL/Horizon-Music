@@ -3,6 +3,15 @@ from src.network.NetworkCommunication import *
 from src.network.OperationType import OperationType
 
 server_songs = Playlist()
+socket = None
+log = None
+
+
+def init(sock, logger):
+    global socket
+    socket = sock
+    global log
+    log = logger
 
 
 def do_req(req, socket, log):
@@ -15,5 +24,7 @@ def get_all_server_songs(server_msg_raw):
 
     global server_songs
     server_songs.conv_to_obj(playlist=server_msg_raw.split(","), name="ServerAllSongs")
-    print(server_songs.songs)
 
+
+def search_song(search):
+    send_req(assemble_req(OperationType.SEARCH.name, search), socket, log)

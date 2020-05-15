@@ -25,11 +25,12 @@ if __name__ == "__main__":
         client.connect((params.SERVER_IP, params.PORT))
 
     except ConnectionRefusedError as err:
-        log.write("Connection timeout! - You are using Horizon Music offline |{}".format(err))
+        log.write("Connection timeout! - You are using Horizon Music offline | {}".format(err))
         is_online = False
 
     finally:
         if is_online:  # Get music lib
+            ClientDoReqs.init(client, log)
             send_req(assemble_req(OperationType.ALL_SONGS.name), client, log)
             ClientDoReqs.get_all_server_songs(recv_req(client, log))
 

@@ -24,7 +24,6 @@ class MultiServer:
     def handle_client(self, sock, address):
         self.log.write("Client: {} CONNECTED".format(address))
         req = split_req(recv_req(sock, log))
-
         if req[0] in OperationType.list():
             ServerDoReqs.do_req(req, sock, address, self.log)
 

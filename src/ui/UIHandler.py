@@ -132,6 +132,9 @@ class SearchInput(TransTextInput):
         elif is_valid == self.easter_time:
             self.text = str(chr(84) + chr(114) + chr(117) + chr(101) + chr(33))
 
+        elif is_valid == "True":
+            ClientDoReqs.search_song(self.search)
+
 
 class VolumeUp(ImageButton):
     def __init__(self, **kwargs):
