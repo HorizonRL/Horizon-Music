@@ -8,17 +8,28 @@ _playlist_handler = PlaylistHandler()
 def do_req(req, socket, address, log):
     if req[0] == OperationType.ALL_SONGS.name:
         _send_all_song_playlist(socket, log)
+        return
+
     elif req[0] == OperationType.SEARCH.name:
         _search(req[1:], socket, log)
+        return
+
     elif req[0] == OperationType.DISCONNECT.name:
         _disconnect(socket, address, log)
+        return
+
     elif req[0] == OperationType.REQ_SONG.name:
         _send_song(req[1:], socket, log)
+        return
+
+    else:
+        return
 
 
 def _search(search, socket, log):
     # len\search\song(str)
-    _send_song(search, socket, log)
+    print("iamofekharel")
+    # _send_song(search, socket, log)
 
 
 def _send_song(song_to_play, socket, log):
