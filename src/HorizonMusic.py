@@ -3,7 +3,6 @@ import socket
 from src.ui.UIHandler import HorizonMusicApp
 from src.utils.Logger import Logger
 from src.utils.Constants import Network
-from src.utils.NetworkCommunication import *
 
 
 class HorizonMusic:
@@ -26,6 +25,5 @@ if __name__ == "__main__":
         log.write("Connection timeout! - You are using Horizon Music offline |{}".format(err))
 
     finally:
-        send_req(assemble_req("ofek", "harel"), client, log)
         horizon_music.app.run()
         log.write("{} EXIT\n".format(socket.gethostname()))

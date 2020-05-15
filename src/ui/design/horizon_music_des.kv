@@ -95,16 +95,12 @@ WindowManager:
         stretch: True
         keep_ratio: True
 
-        SearchInput:
-            font_size: 33
+    SearchInput:
+        font_size: 33
+        pos_hint: {'center_x': 0.455, 'center_y': 0.743}
+        size: 505, 80
+        size_hint: None, None
 
-            size: 520, 80
-            pos: 610, 743
-
-
-            canvas.before:
-                Color:
-                    rgba: 0.157, 0.455, 1, 1
 
     ImageButton:
         id:SearchIcon
