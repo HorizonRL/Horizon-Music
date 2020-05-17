@@ -1,6 +1,7 @@
 import logging
 from pathlib import Path
 from datetime import datetime
+import os
 
 
 class Logger:
@@ -10,7 +11,16 @@ class Logger:
 
         self.logger = logging.getLogger(self.log_name)
 
-        self.log = logging.FileHandler(str(Path.cwd() / 'logs' / str(self.log_name + '.log')).replace('src', ''))
+        path = os.path.join(str(Path.cwd()).replace('src', ''), 'logs')
+        print(path)
+
+        try:
+            os.makedirs(path)
+
+        except FileExistsError:
+            pass
+
+        self.log = logging.FileHandler(os.path.join(path, self.log_name + '.log'))
         self.log.setLevel(logging.INFO)
 
         self.logger.addHandler(self.log)

@@ -1,4 +1,5 @@
 import socket
+import threading
 
 from src.network import ClientDoReqs
 from src.network.OperationType import OperationType
@@ -35,6 +36,8 @@ if __name__ == "__main__":
             ClientDoReqs.get_all_server_songs(recv_req(client, log))
 
         horizon_music = HorizonMusic(log)
-        horizon_music.app.run()
+        app_thread = threading.Thread(target=horizon_music.app.run())
+        app_thread.start()
+
         if is_online:
             send_req(assemble_req(OperationType.DISCONNECT.name), client, log)

@@ -42,8 +42,8 @@ def _send_song(song_to_play, socket, log):
         index += 1
 
     file = open(_playlist_handler.all_music.songs[index].file_name, "rb")
-    print(len(assemble_req(OperationType.REQ_SONG.name, file.read())))
-    send_req(assemble_req(OperationType.REQ_SONG.name, file.read()), socket, log)
+    print(_playlist_handler.all_music.songs[index].file_name)
+    send_req(assemble_req(OperationType.REQ_SONG.name, str(file.read())), socket, log)
     file.close()
 
 
