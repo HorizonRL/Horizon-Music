@@ -16,12 +16,12 @@ def split_req(req):
 
 
 def send_req(req, socket_, logger):
-    logger.write("sending request {} to {}".format(req, socket_.getsockname()))
+    logger.write("sending request {} to {}".format(req, socket_.getsockname()).title())
     socket_.send(req.encode())
 
 
 def send_file(file, socket_, logger):
-    logger.write("sending file")
+    logger.write("sending file".title())
     socket_.sendall(file)
 
 
@@ -43,5 +43,5 @@ def recv_req(socket_, logger):
         req += socket_.recv(BUFFER_SIZE).decode()
 
     req = req[len(SEPARATOR_CHAR):]
-    logger.write("receiving request {}".format(req))
+    logger.write("receiving request {}".format(req).title())
     return req

@@ -45,12 +45,12 @@ class GUIFiles:
 
             except FileNotFoundError:
                 self.is_load = False
-                self.logger.write("ERROR! Can't load file or file is corrupted: {}".format(file))
+                self.logger.write("ERROR! Can't load file or file is corrupted: {}".format(file).title())
 
             f.close()
 
         if self.is_load:
-            self.logger.write("Loaded all GUI files successfully!")
+            self.logger.write("Loaded all GUI files successfully!".title())
 
 
 class Network:

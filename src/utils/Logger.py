@@ -12,7 +12,6 @@ class Logger:
         self.logger = logging.getLogger(self.log_name)
 
         path = os.path.join(str(Path.cwd()).replace('src', ''), 'logs')
-        print(path)
 
         try:
             os.makedirs(path)
@@ -28,4 +27,4 @@ class Logger:
     def write(self, msg):
         self.logger.error("{} --> {}\n".format(datetime.now().strftime("%d/%m/%Y %H:%M:%S"), msg))
         if self.is_console:
-            print('\x1b[6;30;42m' + msg + '\x1b[0m')
+            print("[LOG]\033[1;36m {} \033[;1m".format(msg))
