@@ -14,7 +14,6 @@ from kivy.uix.textinput import TextInput
 from kivy.uix.widget import Widget
 
 from src.music_utils.PlayQueue import PlayQueue
-from src.music_utils.PlaylistHandler import PlaylistHandler
 from src.music_utils.Song import Song
 from src.network import ClientDoReqs
 from src.utils.StableBoolean import StableBoolean
@@ -158,32 +157,32 @@ class VolumeDown(ImageButton):
         self.volume.SetMasterVolume(self.volume.GetMasterVolume() - 1, None)
 
 
-song_queue = PlayQueue()
-
-
-class PlayPause(ImageButton):
-    def __init__(self, **kwargs):
-        super(PlayPause, self).__init__(**kwargs)
-        self.bind(on_press=song_queue.current.toggle_state())
-
-
-class NextSong(ImageButton):
-    def __init__(self, **kwargs):
-        super(NextSong, self).__init__(**kwargs)
-        self.bind(on_press=song_queue.skip())
-
-
-class PrevSong(ImageButton):
-    def __init__(self, **kwargs):
-        super(PrevSong, self).__init__(**kwargs)
-        self.bind(on_press=song_queue.back())
-
-
-class SongWidget(Widget):
-    def __init__(self, **kwargs):
-        super(SongWidget, self).__init__(**kwargs)
-        self.song_obj = Song(r'')
-        self.widget_title = "{} | {}".format(self.song_obj.artist, self.song_obj.song_name)
+# song_queue = PlayQueue()
+#
+#
+# class PlayPause(ImageButton):
+#     def __init__(self, **kwargs):
+#         super(PlayPause, self).__init__(**kwargs)
+#         self.bind(on_press=song_queue.current.toggle_state())
+#
+#
+# class NextSong(ImageButton):
+#     def __init__(self, **kwargs):
+#         super(NextSong, self).__init__(**kwargs)
+#         self.bind(on_press=song_queue.skip())
+#
+#
+# class PrevSong(ImageButton):
+#     def __init__(self, **kwargs):
+#         super(PrevSong, self).__init__(**kwargs)
+#         self.bind(on_press=song_queue.back())
+#
+#
+# class SongWidget(Widget):
+#     def __init__(self, **kwargs):
+#         super(SongWidget, self).__init__(**kwargs)
+#         self.song_obj = Song(r'')
+#         self.widget_title = "{} | {}".format(self.song_obj.artist, self.song_obj.song_name)
 
 
 '''

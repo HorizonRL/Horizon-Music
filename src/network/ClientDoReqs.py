@@ -1,9 +1,11 @@
+from src.music_utils.PlayQueue import PlayQueue, State
 from src.music_utils.Song import Playlist, Song
 from src.network.NetworkCommunication import *
 from src.network.OperationType import OperationType
 import os
 
 server_songs = Playlist()
+play_queue = PlayQueue()
 socket = None
 log = None
 
@@ -13,10 +15,6 @@ def init(sock, logger):
     socket = sock
     global log
     log = logger
-
-
-def do_req(req, socket, log):
-    pass
 
 
 def get_all_server_songs():
@@ -43,6 +41,17 @@ def search_song(search):
     path = os.path.join(path, "stream.mp3")
     music_file = open(path, 'wb')
     music_file.write(s_bytes)
+
+    song = None
+    for p_song in server_songs.songs:
+        if p_song.song_name.replace(' ', '').casefold() in search:
+            song = Song(path)
+            song.song_name = p_song.song_name
+            song.artist = p_song.artist
+            break
+
+    play_queue.set_current_song(song, path)
+    play_queue.set_state(State.PLAY)
 
 
 def disconnect():

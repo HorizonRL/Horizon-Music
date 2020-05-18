@@ -2,11 +2,9 @@ import socket
 import threading
 
 from src.network import ClientDoReqs
-from src.network.OperationType import OperationType
 from src.ui.UIHandler import HorizonMusicApp
 from src.utils.Logger import Logger
 from src.utils.Constants import Network
-from src.network.NetworkCommunication import *
 
 
 class HorizonMusic:
@@ -37,6 +35,7 @@ if __name__ == "__main__":
         horizon_music = HorizonMusic(log)
         app_thread = threading.Thread(target=horizon_music.app.run())
         app_thread.start()
+        log.write("App Starting!")
 
         if is_online:
             ClientDoReqs.disconnect()

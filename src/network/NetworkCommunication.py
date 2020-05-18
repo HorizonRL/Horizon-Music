@@ -1,6 +1,5 @@
 
 SEPARATOR_CHAR = "|||"
-BUFFER_SIZE = 16
 HEADER = 10
 
 
@@ -20,7 +19,7 @@ def send_req(req, socket_, logger, encode=True):
     size = str(len(req)).zfill(HEADER)
     socket_.send(bytes(size.encode()))
 
-    logger.write("Sending Request in size {} to {}".format(size, socket_.getsockname()))
+    logger.write("Sending Request in size {} to {}".format(str(len(req)), socket_.getsockname()))
     socket_.send(req.encode() if encode else req)
 
 
