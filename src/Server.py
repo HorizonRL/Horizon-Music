@@ -31,7 +31,8 @@ class MultiServer:
         while True:
             req = split_req(recv_req(sock, log))
             if req[0] in OperationType.list():
-                ServerDoReqs.do_req(req, sock, address, self.log)
+                ServerDoReqs.init(sock, self.log)
+                ServerDoReqs.do_req(req, address)
 
             else:
                 log.write("Invalid request by {}".format(address))

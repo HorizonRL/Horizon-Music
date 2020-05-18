@@ -1,4 +1,4 @@
-from src.music_utils.Song import Playlist
+from src.music_utils.Song import Playlist, Song
 from src.network.NetworkCommunication import *
 from src.network.OperationType import OperationType
 import os
@@ -19,8 +19,10 @@ def do_req(req, socket, log):
     pass
 
 
-def get_all_server_songs(server_msg_raw):
-    server_msg_raw = server_msg_raw[len(OperationType.ALL_SONGS.name) + len(SEPARATOR_CHAR) + 1: len(server_msg_raw) - 2]
+def get_all_server_songs():
+    send_req(assemble_req(OperationType.ALL_SONGS.name), socket, log)
+    server_msg_raw = recv_req(socket, log)
+    server_msg_raw = server_msg_raw[len(OperationType.ALL_SONGS.name) + len(SEPARATOR_CHAR) + 1: len(server_msg_raw) - len(SEPARATOR_CHAR)]
     server_msg_raw = server_msg_raw.replace("'", "")
 
     global server_songs
@@ -29,7 +31,7 @@ def get_all_server_songs(server_msg_raw):
 
 def search_song(search):
     send_req(assemble_req(OperationType.SEARCH.name, search), socket, log)
-    s_bytes = str(recv_req(socket, log))
+    s_bytes = recv_req(socket, log, decode=False)
 
     path = os.path.join(os.getcwd(), 'music_utils', 'music_lib', 'temp')
     try:
@@ -38,10 +40,10 @@ def search_song(search):
     except FileExistsError as err:
         log.write("an error occurred: {}".format(err))
 
-    music_file = open(os.path.join(path, "stream.mp3"), 'w')
-    music_file.write(split_req(s_bytes)[1])
-    print(split_req(s_bytes)[1])
+    path = os.path.join(path, "stream.mp3")
+    music_file = open(path, 'wb')
+    music_file.write(s_bytes)
 
 
-
-
+def disconnect():
+    send_req(assemble_req(OperationType.DISCONNECT.name), socket, log)
