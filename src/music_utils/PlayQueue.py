@@ -1,6 +1,6 @@
 import enum
 import os
-import threading
+import shutil
 
 from kivy.core.audio import SoundLoader
 
@@ -121,6 +121,9 @@ class PlayQueue:
                 os.remove(path.replace(names[1], names[0]))
 
         return music_file
+
+    def delete_cache(self):
+        shutil.rmtree(self.dict)
 
     def is_next_song(self):
         return self.is_playing() and (self.audio_file.get_pos() + 2 == self.audio_file.legnth)

@@ -34,6 +34,7 @@ def search_song(search):
 
 def disconnect():
     send_req(assemble_req(OperationType.DISCONNECT.name), socket, log)
+    play_queue.delete_cache()
 
 
 def stream_song(search):
