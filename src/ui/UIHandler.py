@@ -1,5 +1,6 @@
 from kivy.app import App
 from kivy.lang import Builder
+from kivy.uix.scrollview import ScrollView
 
 from pycaw.pycaw import AudioUtilities, ISimpleAudioVolume
 from win32api import GetSystemMetrics
@@ -183,6 +184,14 @@ class VolumeDown(ImageButton):
 #         super(SongWidget, self).__init__(**kwargs)
 #         self.song_obj = Song(r'')
 #         self.widget_title = "{} | {}".format(self.song_obj.artist, self.song_obj.song_name)
+#
+#
+# class PlaylistWidget(ScrollView):
+#     def __init__(self, **kwargs):
+#         super(PlaylistWidget, self).__init__(**kwargs)
+#         for song in ClientDoReqs.server_songs:
+#             widg = SongWidget()
+#             widg.song_obj = Song()
 
 
 '''

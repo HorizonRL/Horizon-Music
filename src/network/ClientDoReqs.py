@@ -29,18 +29,18 @@ def get_all_server_songs():
 
 def search_song(search):
     send_req(assemble_req(OperationType.SEARCH.name, search), socket, log)
+    stream_song(search)
+
+
+def disconnect():
+    send_req(assemble_req(OperationType.DISCONNECT.name), socket, log)
+
+
+def stream_song(search):
     s_bytes = recv_req(socket, log, decode=False)
-
-    path = os.path.join(os.getcwd(), 'music_utils', 'music_lib', 'temp')
-    try:
-        os.makedirs(path)
-
-    except FileExistsError as err:
-        log.write("an error occurred: {}".format(err))
-
-    path = os.path.join(path, "stream.mp3")
-    music_file = open(path, 'wb')
-    music_file.write(s_bytes)
+    file = play_queue.manege_cache()
+    file.write(s_bytes)
+    path = file.name
 
     song = None
     for p_song in server_songs.songs:
@@ -54,5 +54,17 @@ def search_song(search):
     play_queue.set_state(State.PLAY)
 
 
-def disconnect():
-    send_req(assemble_req(OperationType.DISCONNECT.name), socket, log)
+def req_song(song_index):
+    send_req(assemble_req(OperationType.REQ_SONG, song_index))
+    s_bytes = recv_req(socket, log, decode=False)
+
+    file = play_queue.manege_cache(unload=False)
+    file.write(s_bytes)
+    path = file.name
+
+    song = Song(path)
+    song.song_name = server_songs[song_index].song_name
+    song.artist = server_songs[song_index].artist
+
+    play_queue.set_next(path)
+
