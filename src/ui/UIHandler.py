@@ -1,5 +1,8 @@
 from kivy.app import App
 from kivy.lang import Builder
+from kivy.uix.floatlayout import FloatLayout
+from kivy.uix.gridlayout import GridLayout
+from kivy.uix.label import Label
 from kivy.uix.scrollview import ScrollView
 
 from pycaw.pycaw import AudioUtilities, ISimpleAudioVolume
@@ -136,63 +139,85 @@ class SearchInput(TransTextInput):
             ClientDoReqs.search_song(self.search)
 
 
-class VolumeUp(ImageButton):
+class PlayPause(ImageButton):
     def __init__(self, **kwargs):
-        super(VolumeUp, self).__init__(**kwargs)
-        self.bind(on_press=self.act)
-        self.session = AudioUtilities.GetAllSessions()
-        self.volume = self.session._ctl.QueryInterface(ISimpleAudioVolume)
-
-    def act(self):
-        self.volume.SetMasterVolume(self.volume.GetMasterVolume() + 1, None)
+        super(PlayPause, self).__init__(**kwargs)
+        self.bind(on_press=ClientDoReqs.play_queue.current.toggle_state())
 
 
-class VolumeDown(ImageButton):
+class NextSong(ImageButton):
     def __init__(self, **kwargs):
-        super(VolumeDown, self).__init__(**kwargs)
-        self.bind(on_press=self.act)
-        self.session = AudioUtilities.GetAllSessions()
-        self.volume = self.session._ctl.QueryInterface(ISimpleAudioVolume)
-
-    def act(self):
-        self.volume.SetMasterVolume(self.volume.GetMasterVolume() - 1, None)
+        super(NextSong, self).__init__(**kwargs)
+        self.bind(on_press=ClientDoReqs.play_queue.skip())
 
 
-# song_queue = PlayQueue()
-#
-#
-# class PlayPause(ImageButton):
-#     def __init__(self, **kwargs):
-#         super(PlayPause, self).__init__(**kwargs)
-#         self.bind(on_press=song_queue.current.toggle_state())
-#
-#
-# class NextSong(ImageButton):
-#     def __init__(self, **kwargs):
-#         super(NextSong, self).__init__(**kwargs)
-#         self.bind(on_press=song_queue.skip())
-#
-#
-# class PrevSong(ImageButton):
-#     def __init__(self, **kwargs):
-#         super(PrevSong, self).__init__(**kwargs)
-#         self.bind(on_press=song_queue.back())
-#
-#
-# class SongWidget(Widget):
-#     def __init__(self, **kwargs):
-#         super(SongWidget, self).__init__(**kwargs)
-#         self.song_obj = Song(r'')
-#         self.widget_title = "{} | {}".format(self.song_obj.artist, self.song_obj.song_name)
-#
-#
-# class PlaylistWidget(ScrollView):
-#     def __init__(self, **kwargs):
-#         super(PlaylistWidget, self).__init__(**kwargs)
-#         for song in ClientDoReqs.server_songs:
-#             widg = SongWidget()
-#             widg.song_obj = Song()
+class PrevSong(ImageButton):
+    def __init__(self, **kwargs):
+        super(PrevSong, self).__init__(**kwargs)
+        self.bind(on_press=ClientDoReqs.play_queue.back())
 
+
+class SongWidget(Widget):
+    def __init__(self, song, **kwargs):
+        super(SongWidget, self).__init__(**kwargs)
+        self.song_obj = song
+        self.size_hint_y = None
+
+        self.image = ImageButton()
+        self.image.source = ClientDoReqs.gui_src.SONG_BACK
+        self.image.size = self.image.texture_size
+        self.image.size_hint_y = None
+        self.add_widget(self.image)
+
+        self.title = Label()
+        self.title.text = "{} | {}".format(self.song_obj.artist, self.song_obj.song_name)
+        self.title.size = self.image.size
+        self.title.bold = True
+        self.title.font_size = 50
+        self.title.size_hint_y = None
+        self.title.texture_size = (500, None)
+        self.title.pos = self.image.x - 425, self.image.y
+        self.add_widget(self.title)
+
+
+class PlaylistWidget(ScrollView):
+    def __init__(self, **kwargs):
+        super(PlaylistWidget, self).__init__(**kwargs)
+        self.playlist = ClientDoReqs.server_songs.songs
+
+        self.bar_width = 20
+        self.size_hint = (1, 0.68)
+        self.scroll_type = ['bars']
+        self.bar_inactive_color = (5, 20, 10, 0.5)
+        self.bar_color = (5, 10, 15, .8)
+        self.do_scroll_x = False
+        self.do_scroll_y = True
+
+        grid = GridLayout()
+        grid.height = 0
+        grid.size_hint_y = None
+        grid.size_hint_x = 1.0
+        grid.cols = 1
+        grid.row_default_height = '25dp'
+        grid.padding = (5, 5)
+
+        i = 0
+        for song in self.playlist:
+            widg = SongWidget(song)
+            widg.size_hint_y = None
+            grid.size_hint_x = 1.0
+
+            # increment grid height
+            grid.height += widg.height
+
+            grid.add_widget(widg, i)
+            i += 1
+
+        self.add_widget(grid)
+
+
+class PlaylistViewer(FloatLayout):
+    pass
 
 '''
     App
@@ -202,8 +227,10 @@ class VolumeDown(ImageButton):
 class HorizonMusicApp(App):
     def __init__(self, logger, **kwargs):
         super(HorizonMusicApp, self).__init__(**kwargs)
-        self.gui_files = GUIFiles(logger)  # load the gui files
+        self.gui_files = ClientDoReqs.gui_src  # load the gui files
         self.kv_des = Builder.load_file(self.gui_files.KV_DES_FILE)
+        # self.kv_des = Builder.load_file(r'A:\Software\Projects\HorizonMusic\src\ui\design\try.kv')
+
         self.click_audio = SoundLoader.load(self.gui_files.CLICK_SOUND)
 
     def click_sound(self, *args):

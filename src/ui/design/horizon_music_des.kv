@@ -3,6 +3,7 @@
 #: import NoTransition kivy.uix.screenmanager.NoTransition
 #: import Video kivy.uix.video.Video
 #: import Image kivy.uix.image.Image
+#: import ScrollView kivy.uix.scrollview.ScrollView
 #=============================================
 
 WindowManager:
@@ -31,7 +32,7 @@ WindowManager:
         source: app.gui_files.CONTINUE_WINDOW_WIDGET
 
         pos_hint: {'bottom': 0.95, 'right': 1}
-        size: 118, 118
+        size: 118 , 118
 
         on_release:
             app.root.current = "Menu"
@@ -133,7 +134,7 @@ WindowManager:
 
     Folder:
         id: folderBTN1
-        playlist_name: "blah"
+        playlist_name: "Downloads"
 
         pos_hint: {'center_x': 0.148, 'center_y': 0.6}
         size: 500, 300
@@ -150,6 +151,8 @@ WindowManager:
     name:"MySongs"
 
     BackgroundImage:
+
+    PlaylistViewer:
 
     MediaPlayer:
 
@@ -168,7 +171,10 @@ WindowManager:
 
 <AllSongsScreen>:
     name: "AllSongs"
+    
     BackgroundImage:
+
+    PlaylistViewer
     
     MediaPlayer:     
 
@@ -212,7 +218,8 @@ WindowManager:
     TransTextInput:
         text: baseFolder.playlist_name
 
-        pos: baseFolder.x + 200, baseFolder.y - 35
+        pos: baseFolder.x + 165, baseFolder.y - 35
+        width: 165
         font_size: 30
 
         disabled: True
@@ -238,7 +245,7 @@ WindowManager:
     on_text_validate:
         root.get_search()
 
-# #=============================================
+# =============================================
 <MediaPlayer@Image>:
     id: mediaPlayer
     source: app.gui_files.MEDIA_PLAYER_BACK
@@ -263,24 +270,13 @@ WindowManager:
         pos: playPause.x - 150, next.y + 4
         size: 125, 125
 
-# #=============================================
+# =============================================
+<PlaylistViewer>:
+    id: playView
+    view_playlist: None
+    FloatLayout:   
+        PlaylistWidget:
+            pos_hint: {"top": 0.82}
+            
 
-# <SongWidget>:
-#    id: song
-#    ImageButton:
-#        id: songBody
-#        source: app.gui_files.SONG_BACK
-#        # pos: 0, 700
-#        size: self.texture_size
-
-#        Label:
-#            id: songName
-#            text: "blah"
-#            font_size: 50
-#            bold: True
-#            size: songBody.texture_size
-#            halign: 'left'
-#            pos: songBody.x - 425, songBody.y
-#            text_size: 800, None
-
-# #=============================================
+# =============================================

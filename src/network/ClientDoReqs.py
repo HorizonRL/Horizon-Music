@@ -1,11 +1,17 @@
 from src.music_utils.PlayQueue import PlayQueue, State
+from src.music_utils.PlaylistHandler import PlaylistHandler
 from src.music_utils.Song import Playlist, Song
 from src.network.NetworkCommunication import *
 from src.network.OperationType import OperationType
 import os
 
+from src.utils.Constants import GUIFiles
+
 server_songs = Playlist()
+my_songs =PlaylistHandler("Downloads").music
 play_queue = PlayQueue()
+
+gui_src = None
 socket = None
 log = None
 
@@ -15,6 +21,8 @@ def init(sock, logger):
     socket = sock
     global log
     log = logger
+    global gui_src
+    gui_src = GUIFiles(log)
 
 
 def get_all_server_songs():
@@ -38,6 +46,9 @@ def disconnect():
 
 
 def stream_song(search):
+    if search == play_queue.current.song_name.replace(" ", '').casefold():
+        return
+
     s_bytes = recv_req(socket, log, decode=False)
     file = play_queue.manege_cache()
     file.write(s_bytes)

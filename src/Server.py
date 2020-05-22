@@ -12,7 +12,7 @@ class MultiServer:
     def __init__(self, logger):
         self.s_s = socket.socket()
         self.s_s.bind(('', Network().PORT))
-        self.s_s.listen(1690)
+        self.s_s.listen(20)
 
         self.clients = []
         self.log = logger

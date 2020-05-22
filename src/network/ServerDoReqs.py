@@ -2,7 +2,7 @@ from src.music_utils.PlaylistHandler import PlaylistHandler
 from src.network.OperationType import OperationType
 from src.network.NetworkCommunication import *
 
-_playlist_handler = PlaylistHandler()
+all_music = PlaylistHandler("All Music").music
 socket = None
 log = None
 
@@ -44,13 +44,13 @@ def _send_song(song_to_play):
     # len\send_song\song(str)
     song_to_play = song_to_play[0]
     index = 0
-    for song in _playlist_handler.all_music.songs:
+    for song in all_music.songs:
         if song.song_name.casefold().replace(' ', '') == song_to_play:
             break
 
         index += 1
 
-    file = open(_playlist_handler.all_music.songs[index].file_name, "rb")
+    file = open(all_music.songs[index].file_name, "rb")
     send_req(file.read(), socket, log, encode=False)
     file.close()
 
@@ -63,5 +63,5 @@ def _disconnect(address):
 
 def _send_all_song_playlist():
     # len\all_songs
-    send_req(assemble_req(OperationType.ALL_SONGS.name, _playlist_handler.all_music.string()), socket, log)
+    send_req(assemble_req(OperationType.ALL_SONGS.name, all_music.string()), socket, log)
 

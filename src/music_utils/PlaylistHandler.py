@@ -2,9 +2,9 @@ import os
 from src.music_utils.Song import Playlist, Song
 
 
-def create_all_music_playlist():
+def create_music_playlist(name):
 
-    my_playlist = Playlist(name="All Songs")
+    my_playlist = Playlist(name=name)
     PATH_TO_MUSIC_LIB = os.path.join(os.getcwd(), r'music_utils\music_lib')
 
     for file in os.listdir(PATH_TO_MUSIC_LIB):
@@ -14,6 +14,7 @@ def create_all_music_playlist():
     return my_playlist
 
 
+
 class PlaylistHandler:
-    def __init__(self):
-        self.all_music = create_all_music_playlist()
+    def __init__(self, name):
+        self.music = create_music_playlist(name)
