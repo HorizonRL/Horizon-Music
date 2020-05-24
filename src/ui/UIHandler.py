@@ -5,7 +5,6 @@ from kivy.uix.gridlayout import GridLayout
 from kivy.uix.label import Label
 from kivy.uix.scrollview import ScrollView
 
-from pycaw.pycaw import AudioUtilities, ISimpleAudioVolume
 from win32api import GetSystemMetrics
 
 from kivy.uix.screenmanager import ScreenManager, Screen
@@ -17,11 +16,8 @@ from kivy.core.audio import SoundLoader
 from kivy.uix.textinput import TextInput
 from kivy.uix.widget import Widget
 
-from src.music_utils.PlayQueue import PlayQueue
-from src.music_utils.Song import Song
 from src.network import ClientManeger
 from src.utils.StableBoolean import StableBoolean
-from src.utils.Constants import GUIFiles
 
 '''
     Screens
@@ -189,7 +185,7 @@ class PlaylistWidget(ScrollView):
         self.size_hint = (1, 0.65)
         self.scroll_type = ['bars']
         self.bar_inactive_color = (5, 20, 10, 0.5)
-        self.bar_color = (5, 10, 15, .8)
+        self.bar_color = (5, 10, 15, .9)
         self.do_scroll_x = False
         self.do_scroll_y = True
 
@@ -227,7 +223,6 @@ class HorizonMusicApp(App):
         super(HorizonMusicApp, self).__init__(**kwargs)
         self.gui_files = ClientManeger.gui_src  # load the gui files
         self.kv_des = Builder.load_file(self.gui_files.KV_DES_FILE)
-        # self.kv_des = Builder.load_file(r'A:\Software\Projects\HorizonMusic\src\ui\design\try.kv')
 
         self.click_audio = SoundLoader.load(self.gui_files.CLICK_SOUND)
 
