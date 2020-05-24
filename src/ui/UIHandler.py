@@ -19,7 +19,7 @@ from kivy.uix.widget import Widget
 
 from src.music_utils.PlayQueue import PlayQueue
 from src.music_utils.Song import Song
-from src.network import ClientDoReqs
+from src.network import ClientManeger
 from src.utils.StableBoolean import StableBoolean
 from src.utils.Constants import GUIFiles
 
@@ -108,7 +108,7 @@ class SearchInput(TransTextInput):
         super(TransTextInput, self).__init__(**kwargs)
         self.coulor = (0.157, 0.455, 1, 1)
         self.search = ''
-        self.playlist = ClientDoReqs.server_songs
+        self.playlist = ClientManeger.server_songs
         self.easter_time = str(chr(111) + chr(102) + chr(101) + chr(107) + chr(32) + chr(114) + chr(108) +
                                chr(32) + chr(116) + chr(104) + chr(101) + chr(32)
                                + chr(107) + chr(105) + chr(110) + chr(103))
@@ -136,25 +136,25 @@ class SearchInput(TransTextInput):
             self.text = str(chr(84) + chr(114) + chr(117) + chr(101) + chr(33))
 
         elif is_valid == "True":
-            ClientDoReqs.search_song(self.search)
+            ClientManeger.search_song(self.search)
 
 
 class PlayPause(ImageButton):
     def __init__(self, **kwargs):
         super(PlayPause, self).__init__(**kwargs)
-        self.bind(on_press=ClientDoReqs.play_queue.current.toggle_state())
+        self.bind(on_press=ClientManeger.play_queue.toggle_state)
 
 
 class NextSong(ImageButton):
     def __init__(self, **kwargs):
         super(NextSong, self).__init__(**kwargs)
-        self.bind(on_press=ClientDoReqs.play_queue.skip())
+        self.bind(on_press=ClientManeger.play_queue.skip())
 
 
 class PrevSong(ImageButton):
     def __init__(self, **kwargs):
         super(PrevSong, self).__init__(**kwargs)
-        self.bind(on_press=ClientDoReqs.play_queue.back())
+        self.bind(on_press=ClientManeger.play_queue.back())
 
 
 class SongWidget(Widget):
@@ -164,7 +164,7 @@ class SongWidget(Widget):
         self.size_hint_y = None
 
         self.image = ImageButton()
-        self.image.source = ClientDoReqs.gui_src.SONG_BACK
+        self.image.source = ClientManeger.gui_src.SONG_BACK
         self.image.size = self.image.texture_size
         self.image.size_hint_y = None
         self.add_widget(self.image)
@@ -183,10 +183,10 @@ class SongWidget(Widget):
 class PlaylistWidget(ScrollView):
     def __init__(self, **kwargs):
         super(PlaylistWidget, self).__init__(**kwargs)
-        self.playlist = ClientDoReqs.server_songs.songs
+        self.playlist = ClientManeger.server_songs.songs
 
-        self.bar_width = 20
-        self.size_hint = (1, 0.68)
+        self.bar_width = 40
+        self.size_hint = (1, 0.65)
         self.scroll_type = ['bars']
         self.bar_inactive_color = (5, 20, 10, 0.5)
         self.bar_color = (5, 10, 15, .8)
@@ -196,9 +196,7 @@ class PlaylistWidget(ScrollView):
         grid = GridLayout()
         grid.height = 0
         grid.size_hint_y = None
-        grid.size_hint_x = 1.0
         grid.cols = 1
-        grid.row_default_height = '25dp'
         grid.padding = (5, 5)
 
         i = 0
@@ -227,7 +225,7 @@ class PlaylistViewer(FloatLayout):
 class HorizonMusicApp(App):
     def __init__(self, logger, **kwargs):
         super(HorizonMusicApp, self).__init__(**kwargs)
-        self.gui_files = ClientDoReqs.gui_src  # load the gui files
+        self.gui_files = ClientManeger.gui_src  # load the gui files
         self.kv_des = Builder.load_file(self.gui_files.KV_DES_FILE)
         # self.kv_des = Builder.load_file(r'A:\Software\Projects\HorizonMusic\src\ui\design\try.kv')
 

@@ -1,7 +1,7 @@
 import socket
 import threading
 
-from src.network import ClientDoReqs
+from src.network import ClientManeger
 from src.ui.UIHandler import HorizonMusicApp
 from src.utils.Logger import Logger
 from src.utils.Constants import Network
@@ -18,24 +18,23 @@ if __name__ == "__main__":
     log = Logger(log_name="{}-log".format(str(socket.gethostname())))
 
     params = Network()
-    is_online = True
 
     try:
         client.connect((params.SERVER_IP, params.PORT))
 
     except ConnectionRefusedError as err:
         log.write("Connection timeout! - You are using Horizon Music offline | {}".format(err))
-        is_online = False
+        params.IS_ONLINE = False
 
     finally:
-        if is_online:  # Get music lib
-            ClientDoReqs.init(client, log)
-            ClientDoReqs.get_all_server_songs()
+        ClientManeger.init(client, log, params.IS_ONLINE)
+        if params.IS_ONLINE:  # Get music lib
+            ClientManeger.get_all_server_songs()
 
         horizon_music = HorizonMusic(log)
         app_thread = threading.Thread(target=horizon_music.app.run())
         app_thread.start()
         log.write("App Starting!")
 
-        if is_online:
-            ClientDoReqs.disconnect()
+        if params.IS_ONLINE:
+            ClientManeger.disconnect()

@@ -26,7 +26,7 @@ WindowManager:
         source: app.gui_files.INTRO
         size: self.texture_size
         state: 'play'
-
+    
     ImageButton:
         id: contBTN
         source: app.gui_files.CONTINUE_WINDOW_WIDGET
@@ -252,7 +252,7 @@ WindowManager:
     pos: 0,-460
     size: self.texture_size[0] - 20 , self.texture_size[1]
 
-    ImageButton: #PlayPause:
+    PlayPause: #PlayPause:
         id: playPause
         source: app.gui_files.MEDIA_PLAYER_PLAY_PAUSE
         pos: mediaPlayer.x + 867, mediaPlayer.y + 435
@@ -277,6 +277,4 @@ WindowManager:
     FloatLayout:   
         PlaylistWidget:
             pos_hint: {"top": 0.82}
-            
-
 # =============================================

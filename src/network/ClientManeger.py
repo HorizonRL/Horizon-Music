@@ -8,21 +8,24 @@ import os
 from src.utils.Constants import GUIFiles
 
 server_songs = Playlist()
-my_songs =PlaylistHandler("Downloads").music
+my_songs = PlaylistHandler("Downloads").music
 play_queue = PlayQueue()
 
 gui_src = None
 socket = None
 log = None
+is_online = None
 
 
-def init(sock, logger):
+def init(sock, logger, online):
     global socket
     socket = sock
     global log
     log = logger
     global gui_src
     gui_src = GUIFiles(log)
+    global is_online
+    is_online = online
 
 
 def get_all_server_songs():

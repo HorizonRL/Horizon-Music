@@ -4,15 +4,14 @@ import shutil
 
 from kivy.core.audio import SoundLoader
 
-from src.music_utils.Song import Song, Playlist
-from src.network import ClientDoReqs
+from src.network import ClientManeger
 
 
 class PlayQueue:
     def __init__(self):
-        self.playlist = Playlist()
+        self.playlist = ClientManeger.server_songs if True else ClientManeger.my_songs
 
-        self.current = Song('')
+        self.current = self.playlist.songs[0]
         self.next = self.current
         self.prev = self.current
 
@@ -20,8 +19,9 @@ class PlayQueue:
 
         self.state = State.PAUSE
         self.is_current_by_queue = False
+        self.seek_time = 0
 
-        self.audio_file = None
+        self.audio_file = SoundLoader.load(self.current.file_name)
 
         self.is_down_to_def_cache_file = True
 
@@ -45,7 +45,7 @@ class PlayQueue:
         for song in self.playlist.songs:
             if self.current.song_name == song.song_name:
                 self.song_index = index
-                self.audio_file = SoundLoader.load(file)
+                self.load()
                 self.update()
                 self.is_current_by_queue = False
                 return
@@ -59,14 +59,14 @@ class PlayQueue:
         self.next = self.playlist.songs[self.song_index + 1]
 
     def skip(self):
-        self.set_state(State.PAUSE)
+        self.unload()
         self.prev = self.current
         self.current = self.next
         self.song_index += 1
         self.next = self.playlist.songs[self.song_index]
 
     def back(self):
-        self.set_state(State.PAUSE)
+        self.unload()
         self.next = self.current
         self.current = self.prev
         self.song_index -= 1
@@ -81,13 +81,15 @@ class PlayQueue:
 
         if new_state is State.PAUSE:
             self.audio_file.stop()
+            self.seek_time = self.audio_file.get_pos()
             self.state = new_state
 
         elif new_state is State.PLAY:
             self.audio_file.play()
+            self.audio_file.seek(self.seek_time)
             self.state = new_state
 
-    def toggle_state(self):
+    def toggle_state(self, *args):
         self.set_state(State.PAUSE if self.state is State.PLAY else State.PLAY)
 
     def is_playing(self):
@@ -96,6 +98,9 @@ class PlayQueue:
     def unload(self):
         self.set_state(State.PAUSE)
         self.audio_file.unload()
+
+    def load(self):
+        self.audio_file = SoundLoader.load(self.current.file_name)
 
     def manege_cache(self, unload=True):
         names = ['stream', "stream1"]
@@ -132,7 +137,7 @@ class PlayQueue:
         while True:
             if self.is_playing():
                 if self.is_next_song():
-                    ClientDoReqs.req_song(self.next)
+                    ClientManeger.req_song(self.next)
 
                 if self.audio_file.legnth - self.audio_file.get_pos < 0.2:
                     self.unload()

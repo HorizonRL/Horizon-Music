@@ -1,7 +1,7 @@
 import threading
 import socket
 
-from src.network import ServerDoReqs
+from src.network import ServerManeger
 from src.network.OperationType import OperationType
 from src.utils.Logger import Logger
 from src.utils.Constants import Network
@@ -31,8 +31,8 @@ class MultiServer:
         while True:
             req = split_req(recv_req(sock, log))
             if req[0] in OperationType.list():
-                ServerDoReqs.init(sock, self.log)
-                ServerDoReqs.do_req(req, address)
+                ServerManeger.init(sock, self.log)
+                ServerManeger.do_req(req, address)
 
             else:
                 log.write("Invalid request by {}".format(address))
