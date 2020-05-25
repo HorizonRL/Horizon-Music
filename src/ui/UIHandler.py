@@ -9,13 +9,15 @@ from win32api import GetSystemMetrics
 
 from kivy.uix.screenmanager import ScreenManager, Screen
 from kivy.uix.image import Image
-from kivy.uix.button import ButtonBehavior
+from kivy.uix.button import ButtonBehavior, Button
 from kivy.core.window import Window
 from kivy.core.audio import SoundLoader
 
 from kivy.uix.textinput import TextInput
 from kivy.uix.widget import Widget
 
+from src.music_utils.PlayQueue import State
+from src.music_utils.Song import Song
 from src.network import ClientManeger
 from src.utils.StableBoolean import StableBoolean
 
@@ -58,14 +60,15 @@ class AllSongsScreen(Screen):
 
 
 class ImageButton(ButtonBehavior, Image):
-    def __init__(self, **kwargs):
+    def __init__(self, is_hover=True, **kwargs):
         super().__init__(**kwargs)
 
         self.r = 0
 
-        self.is_mouse_over = StableBoolean(false_threshold=3)
-        Window.bind(mouse_pos=self.mouse_over_ani)
-        self.bind(on_press=self.on_press)
+        if is_hover:
+            self.is_mouse_over = StableBoolean(false_threshold=3)
+            Window.bind(mouse_pos=self.mouse_over_ani)
+            self.bind(on_press=self.on_press)
 
     def mouse_over_ani(self, src, mouse_pos):
         self.r = self.size[0] / 2
@@ -153,27 +156,48 @@ class PrevSong(ImageButton):
         self.bind(on_press=ClientManeger.play_queue.back())
 
 
-class SongWidget(Widget):
+# class SongWidget(Widget):
+#     def __init__(self, song, **kwargs):
+#         super(SongWidget, self).__init__(**kwargs)
+#         self.song_obj = song
+#         self.size_hint_y = None
+#
+#         self.image = ImageButton()
+#         self.image.source = ClientManeger.gui_src.SONG_BACK
+#         self.image.size = self.image.texture_size
+#         self.image.size_hint_y = None
+#         self.add_widget(self.image)
+#
+#         self.title = Label()
+#         self.title.text = "{} | {}".format(self.song_obj.artist, self.song_obj.song_name)
+#         self.title.size = self.image.size
+#         self.title.bold = True
+#         self.title.font_size = 50
+#         self.title.size_hint_y = None
+#         self.title.texture_size = (500, None)
+#         self.title.pos = self.image.x - 425, self.image.y
+#         self.add_widget(self.title)
+
+
+class SongWidget(Button):
     def __init__(self, song, **kwargs):
         super(SongWidget, self).__init__(**kwargs)
         self.song_obj = song
+
         self.size_hint_y = None
 
-        self.image = ImageButton()
-        self.image.source = ClientManeger.gui_src.SONG_BACK
-        self.image.size = self.image.texture_size
-        self.image.size_hint_y = None
-        self.add_widget(self.image)
+        self.text = "{} | {}".format(self.song_obj.artist, self.song_obj.song_name)
+        self.background_color = (0, 0, 0, 0)
+        self.bold = True
+        self.font_size = 30
 
-        self.title = Label()
-        self.title.text = "{} | {}".format(self.song_obj.artist, self.song_obj.song_name)
-        self.title.size = self.image.size
-        self.title.bold = True
-        self.title.font_size = 50
-        self.title.size_hint_y = None
-        self.title.texture_size = (500, None)
-        self.title.pos = self.image.x - 425, self.image.y
-        self.add_widget(self.title)
+    def on_press(self, *args):
+        ClientManeger.search_song(self.song_obj.song_name)
+        ClientManeger.play_queue.set_state(State.PLAY)
+        self.opacity = 0.5
+
+    def on_release(self):
+        self.opacity = 1
 
 
 class PlaylistWidget(ScrollView):
@@ -233,6 +257,18 @@ class HorizonMusicApp(App):
         self.click_audio.play()
         self.click_audio.volume = 0.2
         self.click_audio.seek(0.3133)
+
+    def bye_sound(self, *args):
+        self.click_audio.unload()
+        ClientManeger.play_queue.unload()
+        bye = SoundLoader.load(self.gui_files.BYE_BYE)
+        bye.play()
+        bye.volume = 1
+
+        while bye.get_pos() < bye.length:
+            continue
+
+        bye.unload()
 
     def build(self):
         self.title = "Horizon Music" + chr(169)

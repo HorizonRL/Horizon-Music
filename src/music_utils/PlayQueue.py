@@ -29,11 +29,12 @@ class PlayQueue:
         try:
             os.makedirs(self.dict)
         except FileExistsError as err:
-            pass
+            shutil.rmtree(self.dict)
+            os.makedirs(self.dict)
 
         self.next_path = None
 
-    def set_current_song(self, current, file):
+    def set_current_song(self, current):
         if current.song_name == self.current.song_name:
             return
 
@@ -81,12 +82,10 @@ class PlayQueue:
 
         if new_state is State.PAUSE:
             self.audio_file.stop()
-            self.seek_time = self.audio_file.get_pos()
             self.state = new_state
 
         elif new_state is State.PLAY:
             self.audio_file.play()
-            self.audio_file.seek(self.seek_time)
             self.state = new_state
 
     def toggle_state(self, *args):

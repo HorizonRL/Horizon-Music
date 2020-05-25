@@ -3,7 +3,7 @@ from src.music_utils.PlaylistHandler import PlaylistHandler
 from src.music_utils.Song import Playlist, Song
 from src.network.NetworkCommunication import *
 from src.network.OperationType import OperationType
-import os
+
 
 from src.utils.Constants import GUIFiles
 
@@ -39,6 +39,7 @@ def get_all_server_songs():
 
 
 def search_song(search):
+    search = search.replace(" ", '').casefold()
     send_req(assemble_req(OperationType.SEARCH.name, search), socket, log)
     stream_song(search)
 
@@ -65,7 +66,7 @@ def stream_song(search):
             song.artist = p_song.artist
             break
 
-    play_queue.set_current_song(song, path)
+    play_queue.set_current_song(song)
     play_queue.set_state(State.PLAY)
 
 

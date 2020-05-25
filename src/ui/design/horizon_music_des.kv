@@ -35,6 +35,7 @@ WindowManager:
         size: 118 , 118
 
         on_release:
+            # app.open_settings()
             app.root.current = "Menu"
             intro.state = 'stop'
 
@@ -84,6 +85,7 @@ WindowManager:
         size: 118, 118
 
         on_release:
+            app.bye_sound()
             app.get_running_app().stop()
 
     Image:

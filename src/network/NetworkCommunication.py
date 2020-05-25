@@ -27,5 +27,5 @@ def recv_req(socket_, logger, decode=True):
     size = int(str(socket_.recv(HEADER).decode()))
     req = socket_.recv(size + 1)
 
-    logger.write("Receiving Request in size: {}".format(size))
     return req.decode() if decode else req
+

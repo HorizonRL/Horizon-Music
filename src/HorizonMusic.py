@@ -23,10 +23,11 @@ if __name__ == "__main__":
         client.connect((params.SERVER_IP, params.PORT))
 
     except ConnectionRefusedError as err:
-        log.write("Connection timeout! - You are using Horizon Music offline | {}".format(err))
+        log.write("Connection timeout! - You are using Horizon Music offline --> {}".format(err))
         params.IS_ONLINE = False
 
     finally:
+        log.write("App Starting!")
         ClientManeger.init(client, log, params.IS_ONLINE)
         if params.IS_ONLINE:  # Get music lib
             ClientManeger.get_all_server_songs()
@@ -34,7 +35,7 @@ if __name__ == "__main__":
         horizon_music = HorizonMusic(log)
         app_thread = threading.Thread(target=horizon_music.app.run())
         app_thread.start()
-        log.write("App Starting!")
 
         if params.IS_ONLINE:
             ClientManeger.disconnect()
+            log.write("App Closing!")
