@@ -1,5 +1,5 @@
 from src.music_utils.PlayQueue import PlayQueue, State
-from src.music_utils.PlaylistHandler import PlaylistHandler
+from src.music_utils.PlaylistHandler import create_music_playlist
 from src.music_utils.Song import Playlist, Song
 from src.network.NetworkCommunication import *
 from src.network.OperationType import OperationType
@@ -8,13 +8,13 @@ from src.network.OperationType import OperationType
 from src.utils.Constants import GUIFiles
 
 server_songs = Playlist()
-my_songs = PlaylistHandler("Downloads").music
-play_queue = PlayQueue()
+my_songs = create_music_playlist("Downloads")
 
+play_queue = None
 gui_src = None
 socket = None
 log = None
-is_online = None
+is_online = False
 
 
 def init(sock, logger, online):
@@ -26,7 +26,9 @@ def init(sock, logger, online):
     gui_src = GUIFiles(log)
     global is_online
     is_online = online
-
+    global play_queue
+    play_queue = PlayQueue()
+    
 
 def get_all_server_songs():
     send_req(assemble_req(OperationType.ALL_SONGS.name), socket, log)
@@ -38,49 +40,18 @@ def get_all_server_songs():
     server_songs.conv_to_obj(playlist=server_msg_raw.split(","), name="ServerAllSongs")
 
 
-def search_song(search):
-    search = search.replace(" ", '').casefold()
-    send_req(assemble_req(OperationType.SEARCH.name, search), socket, log)
-    stream_song(search)
-
-
 def disconnect():
-    send_req(assemble_req(OperationType.DISCONNECT.name), socket, log)
     play_queue.delete_cache()
-
-
-def stream_song(search):
-    if search == play_queue.current.song_name.replace(" ", '').casefold():
-        return
-
-    s_bytes = recv_req(socket, log, decode=False)
-    file = play_queue.manege_cache()
-    file.write(s_bytes)
-    path = file.name
-
-    song = None
-    for p_song in server_songs.songs:
-        if p_song.song_name.replace(' ', '').casefold() in search:
-            song = Song(path)
-            song.song_name = p_song.song_name
-            song.artist = p_song.artist
-            break
-
-    play_queue.set_current_song(song)
-    play_queue.set_state(State.PLAY)
+    send_req(assemble_req(OperationType.DISCONNECT.name), socket, log)
 
 
 def req_song(song_index):
-    send_req(assemble_req(OperationType.REQ_SONG, song_index))
+    send_req(assemble_req(OperationType.REQ_SONG.name, song_index), socket, log)
     s_bytes = recv_req(socket, log, decode=False)
 
-    file = play_queue.manege_cache(unload=False)
+    file = open(play_queue.manege_cache(unload=False), "wb")
     file.write(s_bytes)
     path = file.name
 
-    song = Song(path)
-    song.song_name = server_songs[song_index].song_name
-    song.artist = server_songs[song_index].artist
-
-    play_queue.set_next(path)
+    return path
 

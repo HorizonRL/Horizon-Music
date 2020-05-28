@@ -14,7 +14,12 @@ def create_music_playlist(name):
     return my_playlist
 
 
+def find_song(song, playlist):
+    i = 0
+    for s in playlist.songs:
+        if s.song_name == song.song_name:
+            return i
 
-class PlaylistHandler:
-    def __init__(self, name):
-        self.music = create_music_playlist(name)
+        i += 1
+    return i
+

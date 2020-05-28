@@ -253,19 +253,19 @@ WindowManager:
     pos: 0,-460
     size: self.texture_size[0] - 20 , self.texture_size[1]
 
-    PlayPause: #PlayPause:
+    PlayPause:
         id: playPause
         source: app.gui_files.MEDIA_PLAYER_PLAY_PAUSE
         pos: mediaPlayer.x + 867, mediaPlayer.y + 435
         size: 150, 150
         
-    ImageButton: #NextSong:
+    NextSong:
         id: next
         source: app.gui_files.MEDIA_PLAYER_NEXT
         pos: playPause.x + 173, playPause.y + 11
         size: 125, 125
     
-    ImageButton: #PrevSong:
+    PrevSong:
         id: prev
         source: app.gui_files.MEDIA_PLAYER_PREV
         pos: playPause.x - 150, next.y + 4

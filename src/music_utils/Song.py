@@ -2,7 +2,7 @@ import os
 
 
 class Song:
-    def __init__(self, file):
+    def __init__(self, file=''):
         self.file_name = file
 
         sep_index = file.find('-')
@@ -32,7 +32,7 @@ class Song:
 
 class Playlist:
     def __init__(self, songs=[], name="MyPlaylist"):
-        self.songs = songs
+        self.songs = []
         self.name = name
     
     def string(self):
@@ -44,8 +44,10 @@ class Playlist:
 
     def conv_to_obj(self, playlist=[], name='MyPlaylist'):
         self.name = name
+        i = 0
         for song in playlist:
-            the_song = Song('')
-            the_song.song_name = song[: song.find('|') - 1]
-            the_song.artist = song[song.find('|') + 1:]
-            self.songs.append(the_song)
+            s = Song('')
+            s.song_name = song[: song.find('|') - 1].replace('"', "").replace(']', '')
+            s.artist = song[song.find('|') + 1:].replace('"', "").replace(']', '')
+            self.songs.insert(i, s)
+            i += 1

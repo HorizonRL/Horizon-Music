@@ -2,7 +2,6 @@ from kivy.app import App
 from kivy.lang import Builder
 from kivy.uix.floatlayout import FloatLayout
 from kivy.uix.gridlayout import GridLayout
-from kivy.uix.label import Label
 from kivy.uix.scrollview import ScrollView
 
 from win32api import GetSystemMetrics
@@ -14,10 +13,9 @@ from kivy.core.window import Window
 from kivy.core.audio import SoundLoader
 
 from kivy.uix.textinput import TextInput
-from kivy.uix.widget import Widget
 
 from src.music_utils.PlayQueue import State
-from src.music_utils.Song import Song
+from src.music_utils.PlaylistHandler import find_song
 from src.network import ClientManeger
 from src.utils.StableBoolean import StableBoolean
 
@@ -107,35 +105,42 @@ class SearchInput(TransTextInput):
         super(TransTextInput, self).__init__(**kwargs)
         self.coulor = (0.157, 0.455, 1, 1)
         self.search = ''
-        self.playlist = ClientManeger.server_songs
+        self.search_index = 0
+
         self.easter_time = str(chr(111) + chr(102) + chr(101) + chr(107) + chr(32) + chr(114) + chr(108) +
                                chr(32) + chr(116) + chr(104) + chr(101) + chr(32)
                                + chr(107) + chr(105) + chr(110) + chr(103))
         
     def get_search(self):
         self.search = self.text.replace(' ', '').casefold()
-
+        self.search_index = 0
         self.act_on_valid(self.validate())
 
     def validate(self):
         if self.search == self.easter_time.replace(' ', '').casefold():
-            return self.easter_time
+            return "Easter"
 
-        for song in self.playlist.songs:
+        self.search_index = 0
+        i = 0
+
+        for song in ClientManeger.server_songs.songs:
             if song.song_name.replace(' ', '').casefold() in self.search:
+                self.search_index = i - 1
                 return "True"
 
+            i += 1
+            
         return "False"
 
     def act_on_valid(self, is_valid):
         if is_valid == "False":
             self.text = "Can't find this search!"
 
-        elif is_valid == self.easter_time:
+        elif is_valid == "Easter":
             self.text = str(chr(84) + chr(114) + chr(117) + chr(101) + chr(33))
 
         elif is_valid == "True":
-            ClientManeger.search_song(self.search)
+            ClientManeger.play_queue.load_song_from_server(self.search_index)
 
 
 class PlayPause(ImageButton):
@@ -147,13 +152,13 @@ class PlayPause(ImageButton):
 class NextSong(ImageButton):
     def __init__(self, **kwargs):
         super(NextSong, self).__init__(**kwargs)
-        self.bind(on_press=ClientManeger.play_queue.skip())
+        self.bind(on_press=ClientManeger.play_queue.skip)
 
 
 class PrevSong(ImageButton):
     def __init__(self, **kwargs):
         super(PrevSong, self).__init__(**kwargs)
-        self.bind(on_press=ClientManeger.play_queue.back())
+        self.bind(on_press=ClientManeger.play_queue.back)
 
 
 class SongWidget(Button):
@@ -164,13 +169,12 @@ class SongWidget(Button):
         self.size_hint_y = None
 
         self.text = "{} | {}".format(self.song_obj.artist, self.song_obj.song_name)
-        self.background_color = (0, 0, 0, 0)
+        self.background_color = (0.05, 0.1, 0.2, 0.2)
         self.bold = True
         self.font_size = 30
 
     def on_press(self, *args):
-        ClientManeger.search_song(self.song_obj.song_name)
-        ClientManeger.play_queue.set_state(State.PLAY)
+        ClientManeger.play_queue.load_song_from_server(find_song(self.song_obj, ClientManeger.server_songs))
         self.opacity = 0.5
 
     def on_release(self):
@@ -182,8 +186,8 @@ class PlaylistWidget(ScrollView):
         super(PlaylistWidget, self).__init__(**kwargs)
         self.playlist = ClientManeger.server_songs.songs
 
-        self.bar_width = 40
-        self.size_hint = (1, 0.65)
+        self.bar_width = 30
+        self.size_hint = (1, 0.71)
         self.scroll_type = ['bars']
         self.bar_inactive_color = (5, 20, 10, 0.5)
         self.bar_color = (5, 10, 15, .9)
@@ -196,7 +200,6 @@ class PlaylistWidget(ScrollView):
         grid.cols = 1
         grid.padding = (5, 5)
 
-        i = 0
         for song in self.playlist:
             widg = SongWidget(song)
             widg.size_hint_y = None
@@ -205,8 +208,7 @@ class PlaylistWidget(ScrollView):
             # increment grid height
             grid.height += widg.height
 
-            grid.add_widget(widg, i)
-            i += 1
+            grid.add_widget(widg)
 
         self.add_widget(grid)
 

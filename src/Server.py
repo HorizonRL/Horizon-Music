@@ -21,9 +21,7 @@ class MultiServer:
         sock, address = self.s_s.accept()
 
         t = threading.Thread(target=self.handle_client, args=(sock, address))
-
         self.clients.append(t)
-
         t.start()
 
     def handle_client(self, sock, address):
