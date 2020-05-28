@@ -28,7 +28,6 @@ class GUIFiles:
         self.MEDIA_PLAYER_PREV = os.path.join(self.GUI_PATH, r'images\widgets\prev.png')
         self.MEDIA_PLAYER_NEXT = os.path.join(self.GUI_PATH, r'images\widgets\next.png')
         self.MEDIA_PLAYER_BACK = os.path.join(self.GUI_PATH, r'images\screens\MediaPlayerBack.png')
-        self.BYE_BYE = os.path.join(self.GUI_PATH, r'sounds\bye.mp3')
 
         self.INTRO = os.path.join(self.GUI_PATH, r'videos\Intro.avi')
 
@@ -56,5 +55,5 @@ class GUIFiles:
 
 class Network:
     PORT = 1690
-    SERVER_IP = '127.0.0.1'  # '192.168.1.16' -> ip
+    SERVER_IP = '127.0.0.1'  # '192.168.1.16'
     IS_ONLINE = True

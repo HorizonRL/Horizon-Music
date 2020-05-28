@@ -156,29 +156,6 @@ class PrevSong(ImageButton):
         self.bind(on_press=ClientManeger.play_queue.back())
 
 
-# class SongWidget(Widget):
-#     def __init__(self, song, **kwargs):
-#         super(SongWidget, self).__init__(**kwargs)
-#         self.song_obj = song
-#         self.size_hint_y = None
-#
-#         self.image = ImageButton()
-#         self.image.source = ClientManeger.gui_src.SONG_BACK
-#         self.image.size = self.image.texture_size
-#         self.image.size_hint_y = None
-#         self.add_widget(self.image)
-#
-#         self.title = Label()
-#         self.title.text = "{} | {}".format(self.song_obj.artist, self.song_obj.song_name)
-#         self.title.size = self.image.size
-#         self.title.bold = True
-#         self.title.font_size = 50
-#         self.title.size_hint_y = None
-#         self.title.texture_size = (500, None)
-#         self.title.pos = self.image.x - 425, self.image.y
-#         self.add_widget(self.title)
-
-
 class SongWidget(Button):
     def __init__(self, song, **kwargs):
         super(SongWidget, self).__init__(**kwargs)
@@ -257,18 +234,6 @@ class HorizonMusicApp(App):
         self.click_audio.play()
         self.click_audio.volume = 0.2
         self.click_audio.seek(0.3133)
-
-    def bye_sound(self, *args):
-        self.click_audio.unload()
-        ClientManeger.play_queue.unload()
-        bye = SoundLoader.load(self.gui_files.BYE_BYE)
-        bye.play()
-        bye.volume = 1
-
-        while bye.get_pos() < bye.length:
-            continue
-
-        bye.unload()
 
     def build(self):
         self.title = "Horizon Music" + chr(169)
