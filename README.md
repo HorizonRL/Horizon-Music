@@ -8,10 +8,7 @@ To use:
 2. Download kivy pip install and framework - 1.11.1 virsion.
   https://kivy.org/doc/stable/installation/installation-windows.html
 
-3. Pip install pycaw.
-  https://pycaw.readthedocs.io/en/latest/
-
-4. Get the uncomitted files.
+3. Get the uncomitted files.
   
 You are set to go!
 
