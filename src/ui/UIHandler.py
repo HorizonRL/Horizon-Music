@@ -2,6 +2,7 @@ from kivy.app import App
 from kivy.lang import Builder
 from kivy.uix.floatlayout import FloatLayout
 from kivy.uix.gridlayout import GridLayout
+from kivy.uix.label import Label
 from kivy.uix.scrollview import ScrollView
 
 from win32api import GetSystemMetrics
@@ -125,7 +126,7 @@ class SearchInput(TransTextInput):
 
         for song in ClientManeger.server_songs.songs:
             if song.song_name.replace(' ', '').casefold() in self.search:
-                self.search_index = i - 1
+                self.search_index = i
                 return "True"
 
             i += 1
@@ -169,7 +170,7 @@ class SongWidget(Button):
         self.size_hint_y = None
 
         self.text = "{} | {}".format(self.song_obj.artist, self.song_obj.song_name)
-        self.background_color = (0.05, 0.1, 0.2, 0.2)
+        self.background_color = (0.05, 0.1, 0.3, 0.05)
         self.bold = True
         self.font_size = 30
 
@@ -215,6 +216,7 @@ class PlaylistWidget(ScrollView):
 
 class PlaylistViewer(FloatLayout):
     pass
+
 
 '''
     App

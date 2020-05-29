@@ -56,7 +56,7 @@ class PlayQueue:
 
         else:
             self.set_state(State.PAUSE if self.state is State.PLAY else State.PLAY)
-        ClientManeger.log.write("Action - PlayPause")
+            ClientManeger.log.write("Action - PlayPause")
 
     def skip(self, *args):
         if self.audio_file is None:
@@ -99,8 +99,8 @@ class PlayQueue:
             self.set_state(State.PLAY)
         self.is_loading = False
 
-        # auto_play_thread = threading.Thread(target=self.auto_play)
-        # auto_play_thread.start()
+        auto_play_thread = threading.Thread(target=self.auto_play)
+        auto_play_thread.start()
 
     def manege_cache(self, unload=True):
         path = os.path.join(self.dict, "stream.mp3")
@@ -138,7 +138,7 @@ class PlayQueue:
                 if self.audio_file.length - self.audio_file.get_pos() < 0.3339 and self.is_playing():
                     self.skip()
                 else:
-                    print(self.audio_file.get_pos())
+                    pass
 
 
 class State(enum.Enum):

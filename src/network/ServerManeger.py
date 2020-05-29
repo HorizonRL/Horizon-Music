@@ -19,10 +19,6 @@ def do_req(req, address):
         _send_all_song_playlist()
         return
 
-    elif req[0] == OperationType.SEARCH.name:
-        pass
-        return
-
     elif req[0] == OperationType.DISCONNECT.name:
         _disconnect(address)
         return

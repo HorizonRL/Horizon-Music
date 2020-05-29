@@ -21,19 +21,27 @@ class MultiServer:
         sock, address = self.s_s.accept()
 
         t = threading.Thread(target=self.handle_client, args=(sock, address))
-        self.clients.append(t)
+        self.clients.append(sock)
         t.start()
 
     def handle_client(self, sock, address):
         self.log.write("Client: {} CONNECTED".format(address))
-        while True:
-            req = split_req(recv_req(sock, log))
-            if req[0] in OperationType.list():
-                ServerManeger.init(sock, self.log)
-                ServerManeger.do_req(req, address)
+        done = False
+        while not done:
+            try:
+                req = split_req(recv_req(sock, log))
+                if req[0] in OperationType.list():
+                    ServerManeger.init(sock, self.log)
+                    ServerManeger.do_req(req, address)
 
-            else:
-                log.write("Invalid request by {}".format(address))
+                else:
+                    log.write("Invalid request by {}".format(address))
+            except OSError:
+                done = True
+                sock.close()
+                self.clients.remove(sock)
+                continue
+
 
     def run(self):
         log.write("Starting Server!")
