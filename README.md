@@ -23,4 +23,4 @@ To run:
 3. to change the ip and port - src/utils/Constants.py - Network
 
 Manual:
-file_name: HorizonMusic.pdf (The manual is in hebrew).
+file_name: HorizonMusic.pdf (The manual is in Hebrew).
