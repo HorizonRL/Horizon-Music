@@ -13,7 +13,7 @@ To use:
 2. Download kivy pip install and framework - 1.11.1 virsion.
   https://kivy.org/doc/stable/installation/installation-windows.html
 
-3. Get the uncomitted files from the developer (contact me).
+3. There are some UI files and the song lib not in this repo (Contact me if needed).
 You are set to go!
 
 To run:
