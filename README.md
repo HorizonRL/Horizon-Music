@@ -1,4 +1,4 @@
-# HorizonMusic
+![](/src/ui/images/logo/TransLogo.png)
 By: Ofek Harel 
 Dev Year: 2020
 
